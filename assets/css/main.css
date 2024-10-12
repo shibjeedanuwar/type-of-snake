@@ -1,0 +1,210 @@
+
+/* post load sppiner */
+
+.loader {
+  
+    position: relative;
+    width: 2.5em;
+    height: 2.5em;
+    transform: rotate(165deg);
+}
+
+.loader:before, .loader:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    border-radius: 0.25em;
+    transform: translate(-50%, -50%);
+}
+
+.loader:before {
+    width: 0.5em;
+    height: 0.5em;
+    animation: before 2s infinite;
+}
+
+.loader:after {
+    width: 0.5em;
+    height: 0.5em;
+    animation: after 2s infinite;
+}
+
+@keyframes before {
+    0% {
+        width: 0.5em;
+        box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+    }
+    35% {
+        width: 2.5em;
+        box-shadow: 0 -0.5em rgba(225, 20, 98, 0.75), 0 0.5em rgba(111, 202, 220, 0.75);
+    }
+    70% {
+        width: 0.5em;
+        box-shadow: -1em -0.5em rgba(225, 20, 98, 0.75), 1em 0.5em rgba(111, 202, 220, 0.75);
+    }
+    100% {
+        box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75), -1em 0.5em rgba(111, 202, 220, 0.75);
+    }
+}
+
+@keyframes after {
+    0% {
+        height: 0.5em;
+        box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+    }
+    35% {
+        height: 2.5em;
+        box-shadow: 0.5em 0 rgba(61, 184, 143, 0.75), -0.5em 0 rgba(233, 169, 32, 0.75);
+    }
+    70% {
+        height: 0.5em;
+        box-shadow: 0.5em -1em rgba(61, 184, 143, 0.75), -0.5em 1em rgba(233, 169, 32, 0.75);
+    }
+    100% {
+        box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75), -0.5em -1em rgba(233, 169, 32, 0.75);
+    }
+}
+/* search popup */
+
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* Transparent dark background */
+    justify-content: center;
+    align-items: center;
+    z-index:500;
+}
+.popup-content {
+    position:relative;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+    height: 150px;
+}
+#searchInput{
+    /* position: absolute; */
+    
+    /* height: 20px; */
+    /* width:90%; */
+    /* height: 20%; */
+}
+.close {
+    cursor: pointer;
+    float: right;
+    font-size: 24px;
+    margin: -10px -10px 0 0;
+}
+#search-button {
+       border:none;
+}
+
+/* search popup */
+
+/* 404 page css */
+
+#error-page{
+    position: relative;
+    background: #fff;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.1);
+  }
+  #error-page .content{
+    /* max-width: 600px; */
+    text-align: center;
+  }
+  .content h2.error-header{
+    font-size: 18vw;
+    line-height: 1em;
+    position: relative;
+  }
+  .content h2.error-header:after{
+    position: absolute;
+    content: attr(data-text);
+    top: 0;
+    left: 0;
+    right: 0;
+    background: -webkit-repeating-linear-gradient(-45deg, #71b7e6, #69a6ce, #b98acc, #ee8176, #b98acc, #69a6ce, #9b59b6);
+    background-size: 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.25);
+    animation: animate 10s ease-in-out infinite;
+  }
+  @keyframes animate {
+    0%{
+      background-position: 0 0;
+    }
+    25%{
+      background-position: 100% 0;
+    }
+    50%{
+      background-position: 100% 100%;
+    }
+    75%{
+      background-position: 0% 100%;
+    }
+    100%{
+      background-position: 0% 0%;
+    }
+  }
+  .content h4{
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    color: #000;
+    font-size: 2em;
+   
+  }
+  .content h4:after{
+    position: absolute;
+    content: attr(data-text);
+    top: 0;
+    left: 0;
+    right: 0;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .content p{
+    font-size: 1.2em;
+    color: #0d0d0d;
+  }
+  .content .btns{
+    margin: 25px 0;
+    display: inline-flex;
+  }
+  .content .btns a{
+    display: inline-block;
+    margin: 0 10px;
+    text-decoration: none;
+    border: 2px solid #69a6ce;
+    color: #69a6ce;
+    font-weight: 500;
+    padding: 10px 25px;
+    border-radius: 25px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+  .content .btns a:hover{
+    background: #69a6ce;
+    color: #fff;
+  }
+
+/* 404 page css */
+
+/* custom page  */
+#custom-page h1{
+text-align: center;
+
+}
+/* custom page */
