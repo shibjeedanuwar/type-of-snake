@@ -41,15 +41,15 @@
                         </a>
                         
 
-                        
-
                             <div class="nav__menu" id="nav-menu">
-                                <?php 
+                            <?php 
                                     wp_nav_menu( array(
-                                        'theme_location' => 'snake',  // Change this to 'primary'
+                                        'theme_location' => 'snake',  // Ensure this matches the registered location
                                         'menu_class' => 'nav__list',
                                         'container' => false,
                                         'walker' => new Custom_Walker_Nav_Menu(),
+                                        'before' => '',  // Optional: Add any HTML before the menu item link
+                                        'after' => '',   // Optional: Add any HTML after the menu item link
                                     ) ); 
                                 ?>
 

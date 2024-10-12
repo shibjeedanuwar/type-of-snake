@@ -29,13 +29,16 @@ function snake_enqueue_styles() {
 }
 add_action('wp_enqueue_scripts', 'snake_enqueue_styles');
 
-// Register Menus
-function snake_register_menus() {
-    register_nav_menus([
-        'snake' => __('Snake Menu', 'type-of-snake'),
-    ]);
+// Register custom navigation menus
+function register_my_menus() {
+    register_nav_menus(
+        array(
+            'snake' => __( 'Snake Menu' ),
+            // Add more menu locations as needed
+        )
+    );
 }
-add_action('init', 'snake_register_menus');
+add_action( 'init', 'register_my_menus' );
 
 // Custom Walker Class
 class Custom_Walker_Nav_Menu extends Walker_Nav_Menu {
@@ -45,7 +48,6 @@ class Custom_Walker_Nav_Menu extends Walker_Nav_Menu {
         $classes = empty($item->classes) ? [] : (array) $item->classes;
         $classes[] = 'nav__item';
 
-        // Check if this item has a submenu
         $has_submenu = !empty($item->classes) && in_array('menu-item-has-children', $item->classes);
         if ($has_submenu) {
             $classes[] = 'has-submenu';
@@ -77,15 +79,18 @@ class Custom_Walker_Nav_Menu extends Walker_Nav_Menu {
             }
         }
 
-        // Add icon to the link
         $icon = '<i class="arrowIcon ri-arrow-right-up-line"></i>';
-        
+
+        // Ensure $args is an object
+        if (!is_object($args)) {
+            $args = (object) array('before' => '', 'after' => '');
+        }
+
         $item_output = $args->before;
         $item_output .= '<a' . $attributes . '>' . $icon . '<span>' . apply_filters('the_title', $item->title, $item->ID) . '</span>';
         
-        // Add dropdown icon on the right side if it has a submenu
         if ($has_submenu) {
-            $item_output .= ' <i class="ri-arrow-down-s-line dropdown-icon"></i>'; // Right-side dropdown icon
+            $item_output .= ' <i class="ri-arrow-down-s-line dropdown-icon"></i>';
         }
 
         $item_output .= '</a>';
