@@ -149,7 +149,7 @@
         
         <main class="row mt-2  ">
         <div class=" col-12 col-md-8 m-auto " id="main-post-view">
-        <div class="wrapper grid" id="postContainer">
+        <div class="wrapper grid " id="postContainer">
         <!-- Items will be appended here by JavaScript -->
         
          

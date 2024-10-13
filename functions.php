@@ -3,9 +3,11 @@
 require_once get_template_directory() . '/inc/class-wp-bootstrap-navwalker.php';
 
 // Enqueue styles and scripts
+// Enqueue styles and scripts
 function snake_enqueue_styles() {
     // Deregister the default jQuery
     wp_deregister_script('jquery');
+    // wp_enqueue_script('jquery');
 
     // Enqueue jQuery from a CDN
     wp_enqueue_script('jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js', [], null, true);
@@ -20,8 +22,15 @@ function snake_enqueue_styles() {
     wp_enqueue_script('bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js', ['jquery'], null, true);
     wp_enqueue_script('admin-ajax-url', get_template_directory_uri() . '/assets/js/ajax.js', ['jquery'], null, true);
 
+    // Enqueue Quill Editor Scripts and Styles
     // Localize the AJAX URL
     wp_localize_script('admin-ajax-url', 'my_ajax_obj', ['ajax_url' => admin_url('admin-ajax.php')]);
+    // Localize the script with your custom data
+    // wp_localize_script('my-script', 'wpNotesArgs', [
+    //     'ajax_url' => admin_url('admin-ajax.php'), // AJAX URL
+    //     'someData' => 'value', // Example of other data
+    //     'anotherData' => 'value2', // More data as needed
+    // ]);
 
     // Custom scripts
     wp_enqueue_script('custom-script1', get_template_directory_uri() . '/assets/js/script.js', ['jquery'], null, true);
@@ -208,6 +217,7 @@ add_action('add_meta_boxes', 'add_custom_meta_boxes');
 
 // Enqueue Quill Editor Scripts and Styles
 function enqueue_quill_editor() {
+// Enqueue Quill Editor Scripts and Styles
     wp_enqueue_script('quill-js', 'https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js', [], null, true);
     wp_enqueue_style('quill-css', 'https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css');
     wp_enqueue_script('quill-init', get_template_directory_uri() . '/assets/js/quill-init.js', ['quill-js'], null, true);

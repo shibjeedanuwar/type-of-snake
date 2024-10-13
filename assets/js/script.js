@@ -60,39 +60,39 @@ $(document).ready(function() {
  
 /* <!-- cookie-consent.php --> */
 const consentBanner = $('#cookie-consent');
-            const acceptButton = $('.acceptButton');
-            const declineButton = $('.declineButton');
+const acceptButton = $('.acceptButton');
+const declineButton = $('.declineButton');
 
-            // Check if the user has already made a choice
-            // Set a timer to show the consent banner after 15 seconds (15000 milliseconds)
-    setTimeout(function() {
-        if (getCookie('cookie_consent') === '') {
-            consentBanner.show(); // Show the banner if no choice has been made
-        }
-    }, 15000); // 15 seconds
+// Check if the user has already made a choice
+setTimeout(function() {
+    if (getCookie('cookie_consent') === '') {
+        consentBanner.show(); // Show the banner if no choice has been made
+    }
+}, 15000); // 15 seconds
 
-            acceptButton.on('click', function() {
-                setCookie('cookie_consent', 'accepted', 30);
-                consentBanner.hide();
-            });
+acceptButton.on('click', function() {
+    setCookie('cookie_consent', 'accepted', 30);
+    consentBanner.hide();
+});
 
-            declineButton.on('click', function() {
-                setCookie('cookie_consent', 'declined', 30);
-                consentBanner.hide();
-            });
+declineButton.on('click', function() {
+    setCookie('cookie_consent', 'declined', 30);
+    consentBanner.hide();
+});
 
-            function setCookie(name, value, days) {
-                const expires = new Date(Date.now() + days * 864e5).toUTCString();
-                document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
-            }
-
-            function getCookie(name) {
-                return document.cookie.split('; ').reduce((r, v) => {
-                    const parts = v.split('=');
-                    return parts[0] === name ? decodeURIComponent(parts[1]) : r;
-                }, '');
-            }
-
-
+function setCookie(name, value, days) {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = name + '=' + encodeURIComponent(value) + 
+                      '; expires=' + expires + 
+                      '; path=/' + 
+                      '; domain=typeofsnake.com;' + // Set the domain if necessary
+                      'Secure; SameSite=Lax'; // Add Secure and SameSite attributes
+}
+function getCookie(name) {
+    return document.cookie.split('; ').reduce((r, v) => {
+        const parts = v.split('=');
+        return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+    }, '');
+}
    
 });

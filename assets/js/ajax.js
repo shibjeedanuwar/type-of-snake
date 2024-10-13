@@ -10,7 +10,6 @@ const loader=`
 
     wrapper.append(loader);
 
-
 // Function to create a post item
 function createPostItem(title, imageUrl,alt_text, desc, link, cat,date) { 
     const truncatedExcerpt = desc.length > 100 ? desc.substring(0, 100) + '...' : desc; // Limit to 100 characters
