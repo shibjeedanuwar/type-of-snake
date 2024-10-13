@@ -9,8 +9,8 @@
             Sorry, the page you're looking for doesn't exist. If you think something is broken, please report a problem.
         </p>
         <div class="btns">
-            <a href="<?php echo home_url(); ?>">Return Home</a>
-            <a href="<?php echo home_url('/contact-us'); ?>">Report Problem</a> <!-- Adjust this link as needed -->
+            <a href="<?php echo home_url(); ?>" rel="noopener noreferrer" aria-label="Visit our home page">Return Home</a>
+            <a href="<?php echo home_url('/contact-us'); ?>" rel="noopener noreferrer" aria-label="Visit our contact-us page" >Report Problem</a> <!-- Adjust this link as needed -->
         </div>
     </div>
 </div>

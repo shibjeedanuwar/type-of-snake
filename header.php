@@ -76,7 +76,7 @@
                             </a>
 
                             <a href="<?php echo esc_url( $twitter_url ? $twitter_url : '#' ); ?>" target="_blank" class="nav__social-link" rel="noopener noreferrer" aria-label="Visit our twitter page">
-                                <i class="ri-twitter-x-fill"></i>
+                            <i class="ri-twitter-line"></i>
                             </a>
 
                             <a href="<?php echo esc_url( $facebook_url ? $facebook_url : '#' ); ?>" target="_blank" class="nav__social-link" rel="noopener noreferrer" aria-label="Visit our Facebook page">
