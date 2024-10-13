@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main class="row mt-md-5 mt-2">
+<div class="row mt-md-5 mt-2">
     <div class="col-12 col-md-8 m-md-auto">
         <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
             <div class="loader mt-4 mb-3 mx-auto"></div>
@@ -63,7 +63,7 @@
             <!-- Indicators and controls -->
         </div>
     </div>
-</main>
+</div>
     
    <!-- post category -->
 <div class="row mt-5">

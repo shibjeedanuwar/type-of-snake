@@ -28,18 +28,20 @@
     <?php wp_head(); ?> 
 </head>
 <body <?php body_class(); ?>>
-<div class="container">
+<div class="full-container">
     <div class="row">
         <div class="col">
             <div class="row header">
                 <div class="col">
                     <header id="header">
                         <nav class="nav container">
-                        <a href="<?php echo esc_url(home_url('/')); ?>" class="nav__logo ">
-                            <img class="nav_logo_img" src="<?php echo  get_template_directory_uri() . '/assets/images/type-of-snake.png'?>"  alt="logo"/>
+
+                       <div class="nav__logo "> 
+                       <a href="<?php echo esc_url(home_url('/')); ?>" >
+                            <img class="nav_logo_img img-fluid" src="<?php echo  get_template_directory_uri() . '/assets/images/type-of-snake.png'?>"  alt="logo" style="width:150px; height:auto;"/>
                         
                         </a>
-                        
+                       </div>
 
                             <div class="nav__menu" id="nav-menu">
                             <?php 

@@ -19,6 +19,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const venomousQuill = new Quill("#venomous_editor", quillOptions);
     const antibioticQuill = new Quill("#antibiotic_editor", quillOptions);
 
+    // Set Quill content with existing data
+    venomousQuill.root.innerHTML = document.getElementById("venomous").value;
+    antibioticQuill.root.innerHTML = document.getElementById("antibiotic").value;
+
     venomousQuill.on("text-change", function() {
         document.getElementById("venomous").value = venomousQuill.root.innerHTML;
     });
