@@ -9,6 +9,9 @@ const loader=`
       <div class="loader mt-4 mb-3 mx-auto"></div>`;
 
     wrapper.append(loader);
+    /* <b class="p-2 mx-1 mobile-category  ">${cat}</b>
+            <h2 class="list-h2 p-2 mx-1">${title} </h2>
+            <img src="${imageUrl}" alt="Post Image" class="img-fluid mb-2" alt="${alt_text}"/> */
 
 // Function to create a post item
 function createPostItem(title, imageUrl,alt_text, desc, link, cat,date) { 
@@ -17,19 +20,23 @@ function createPostItem(title, imageUrl,alt_text, desc, link, cat,date) {
     return `
     <a href="${link} " class="text-dark">
     <div class="item">
+            <div class="card col-md-3>
+
              <div class="shadow-sm">
-             <b class="p-2 mx-1 mobile-category  ">${cat}</b>
-            <h2 class="list-h2 p-2 mx-1">${title} </h2>
-            <img src="${imageUrl}" alt="Post Image" class="img-fluid mb-2" alt="${alt_text}"/>
              
-            
+            <img class="card-img-top " src="${imageUrl}" alt="${alt_text}"/>
+            <div class="card-body d-sr-block d-md-none mobile-category">
+                <h5 class="card-title">${title}</h5>
+                <p class="mb-2">${truncatedExcerpt}</p>
             </div>
-        <div class="details">
+        </div>
+        <div class="details card-body col-md-5">
             <h2>${title}</h2>
              <b class="p-2 ">${cat} | Admin | ${date}</b>
             <p class="mb-2">${truncatedExcerpt}</p>
            
 
+        </div>
         </div>
     </div>
    </a>`;}

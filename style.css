@@ -503,6 +503,7 @@ article .categories::after {
   display: flex; /* Use flexbox for alignment */
   width: 100%;
   margin: 0 auto 20px;
+  transition: transform 0.5s ease;
 }
 
 
@@ -510,29 +511,16 @@ article .categories::after {
   display: none; /* Hide details in grid view */
 }
 
-.list .details {
-   flex: 1;      /* Allow text to take the remaining space */
-  display: flex;
-  flex-direction: column;
- 
-}
-.list img {
-  width:325px; /* Fixed width */
-  height: 100%; /* Fixed height */
-  margin-right: 20px; /* Space between image and text */
-}
-
-
-
 
 
 /* Grid View Styles */
 .grid .item {
   width: 30%; /* Four items side by side on desktop */
-  margin: 1%; /* Adjust margin for spacing */
+  margin: 1%; 
   float: left;
-  text-align: center;
 }
+
+
 .list .list-h2{
   display: none;
   
@@ -565,6 +553,8 @@ article .categories::after {
   .list .mobile-category{
     display:block;
   }
+  
+  
   .list .list-h2{
     display: block;
   }
