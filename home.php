@@ -2,66 +2,94 @@
 
 <div class="row mt-md-5 mt-2">
     <div class="col-12 col-md-8 m-md-auto">
-        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-            <div class="loader mt-4 mb-3 mx-auto"></div>
-            <div class="carousel-inner" style="display: none;"> <!-- Initially hide the carousel -->
-                <?php
-                // Query the latest posts
-                $args = array(
-                    'post_type' => 'post',
-                    'posts_per_page' => 5,
-                    'orderby' => 'date',
-                    'order' => 'DESC',
-                );
-                $query = new WP_Query($args);
-                $first_slide = true;
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+    <div class="loader mt-4 mb-3 mx-auto"></div>
+    <div class="carousel-inner" style="display: none;"> <!-- Initially hide the carousel -->
+        <?php
+        // Query the latest posts
+        $args = array(
+            'post_type' => 'post',
+            'posts_per_page' => 5,
+            'orderby' => 'date',
+            'order' => 'DESC',
+        );
+        $query = new WP_Query($args);
+        $first_slide = true;
 
-                if ($query->have_posts()) :
-                    while ($query->have_posts()) : $query->the_post();
-                        $active_class = $first_slide ? 'active' : '';
-                        ?>
-                        <div class="carousel-item <?php echo esc_attr($active_class); ?>">
-                            <a href="<?php the_permalink(); ?>" title="<?php esc_attr(the_title()); ?>">
-                                <?php if (has_post_thumbnail()) : ?>
-                                    <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" class="img-fluid d-block w-100" 
-                                         alt="<?php echo esc_attr(get_post_meta(get_post_thumbnail_id(), '_wp_attachment_image_alt', true)); ?>" loading="lazy" />
-                                <?php else : ?>
-                                    <img src="https://via.placeholder.com/800x450?text=No+Image" class="img-fluid d-block w-100" alt="No Image" />
-                                <?php endif; ?>
-                                <div class="carousel-caption">
-                                    <h5><?php echo esc_html(get_the_title()); ?></h5>
-                                    <p><?php echo esc_html(wp_trim_words(get_the_excerpt(), 15, '...')); ?></p>
-                                </div>
-                            </a>
-                        </div>
-                        <?php
-                        $first_slide = false;
-                    endwhile;
-                    wp_reset_postdata();
-                else :
-                    ?>
-                    <div class="carousel-item active">
-                        <img src="https://via.placeholder.com/800x450?text=No+Posts" class="d-block w-100" alt="No Posts">
+        if ($query->have_posts()) :
+            while ($query->have_posts()) : $query->the_post();
+                $active_class = $first_slide ? 'active' : '';
+                ?>
+                <div class="carousel-item <?php echo esc_attr($active_class); ?>">
+                    <a href="<?php the_permalink(); ?>" title="<?php esc_attr(the_title()); ?>">
+                        <?php if (has_post_thumbnail()) : ?>
+                            <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" class="img-fluid d-block w-100" 
+                                 alt="<?php echo esc_attr(get_post_meta(get_post_thumbnail_id(), '_wp_attachment_image_alt', true)); ?>" loading="lazy" />
+                        <?php else : ?>
+                            <img src="https://via.placeholder.com/800x450?text=No+Image" class="img-fluid d-block w-100" alt="No Image" />
+                        <?php endif; ?>
                         <div class="carousel-caption">
-                            <h5>No Posts Available</h5>
-                            <p>Please check back later.</p>
+                            <h5><?php echo esc_html(get_the_title()); ?></h5>
+                            <p><?php echo esc_html(wp_trim_words(get_the_excerpt(), 15, '...')); ?></p>
                         </div>
-                    </div>
-                <?php endif; ?>
+                    </a>
+                </div>
+                <?php
+                $first_slide = false;
+            endwhile;
+            wp_reset_postdata();
+        else :
+            ?>
+            <div class="carousel-item active">
+                <img src="https://via.placeholder.com/800x450?text=No+Posts" class="d-block w-100" alt="No Posts">
+                <div class="carousel-caption">
+                    <h5>No Posts Available</h5>
+                    <p>Please check back later.</p>
+                </div>
             </div>
+        <?php endif; ?>
+    </div>
 
-            <!-- Show the carousel once images are loaded -->
-            <?php if ($query->have_posts()) : ?>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        document.querySelector('.loader').style.display = 'none'; // Hide loader
-                        document.querySelector('.carousel-inner').style.display = 'block'; // Show carousel
-                    });
-                </script>
-            <?php endif; ?>
+    <!-- Indicators -->
+    <?php if ($query->have_posts()) : ?>
+        <ol class="carousel-indicators d-none" id="indicat">
+            <?php
+            $query->rewind_posts(); // Reset the query to output indicators
+            $index = 0;
+            while ($query->have_posts()) : $query->the_post();
+                $active_class = $index === 0 ? 'active' : '';
+                ?>
+                <li data-bs-target="#carouselExample" data-bs-slide-to="<?php echo esc_attr($index); ?>" class="<?php echo esc_attr($active_class); ?>"></li>
+                <?php
+                $index++;
+            endwhile;
+            wp_reset_postdata();
+            ?>
+        </ol>
+    <?php endif; ?>
 
-            <!-- Indicators and controls -->
-        </div>
+    <!-- Show the carousel once images are loaded -->
+    <?php if ($query->have_posts()) : ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelector('.loader').style.display = 'none'; // Hide loader
+                document.querySelector('.carousel-inner').style.display = 'block'; // Show carousel
+                $('#indicat').removeClass('d-none');
+
+            });
+        </script>
+    <?php endif; ?>
+
+    <!-- Controls (optional) -->
+    <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button> -->
+</div>
     </div>
 </div>
     
