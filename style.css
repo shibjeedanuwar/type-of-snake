@@ -496,9 +496,17 @@ article .categories::after {
   position: relative;
 }
 
-.item img {
+.grid .item img {
   display: inline-block;
-  /* aspect-ratio: 16 / 9; */
+  aspect-ratio: 16 / 9;
+  border-radius: 0.25rem;
+  display: block;
+  inline-size: 100%;
+  object-fit: cover;
+  
+}
+.list .item img {
+  display: inline-block;
   border-radius: 0.25rem;
   display: block;
   inline-size: 100%;
