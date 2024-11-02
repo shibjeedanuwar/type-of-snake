@@ -18,11 +18,11 @@ function createPostItem(title, imageUrl,alt_text, desc, link, cat,date) {
     const truncatedExcerpt = desc.length > 100 ? desc.substring(0, 100) + '...' : desc; // Limit to 100 characters
 
     return `
-    <a href="${link} " class="text-dark">
+    <a href="${link}" class="text-dark">
     <div class="item">
-            <div class="card col-md-3>
+            <div class="card >
 
-             <div class="shadow-sm">
+             <div class="shadow-sm" id="list-images">
              
             <img class="card-img-top " src="${imageUrl}" alt="${alt_text}"/>
             <div class="card-body d-sr-block d-md-none mobile-category">
@@ -30,7 +30,7 @@ function createPostItem(title, imageUrl,alt_text, desc, link, cat,date) {
                 <p class="mb-2">${truncatedExcerpt}</p>
             </div>
         </div>
-        <div class="details card-body col-md-5">
+        <div class="details card-body ">
             <h2>${title}</h2>
              <b class="p-2 ">${cat} | Admin | ${date}</b>
             <p class="mb-2">${truncatedExcerpt}</p>
