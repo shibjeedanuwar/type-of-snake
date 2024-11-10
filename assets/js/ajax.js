@@ -16,27 +16,27 @@ const loader=`
 // Function to create a post item
 function createPostItem(title, imageUrl,alt_text, desc, link, cat,date) { 
     const truncatedExcerpt = desc.length > 100 ? desc.substring(0, 100) + '...' : desc; // Limit to 100 characters
-
+       const cheeckAlt= alt_text ? alt_text : 'PostImage';
     return `
     <a href="${link}" class="text-dark">
     <div class="item">
-            <div class="card >
 
-             <div class="shadow-sm" id="list-images">
-             
-            <img class="card-img-top " src="${imageUrl}" alt="${alt_text}"/>
+             <div class="shadow-sm " id="list-images">
+              <img class="card-img-top " src="${imageUrl}" alt="${cheeckAlt}"/>
+          
             <div class="card-body d-sr-block d-md-none mobile-category">
                 <h5 class="card-title">${title}</h5>
                 <p class="mb-2">${truncatedExcerpt}</p>
             </div>
         </div>
+
         <div class="details card-body ">
+         
             <h2>${title}</h2>
              <b class="p-2 ">${cat} | Admin | ${date}</b>
             <p class="mb-2">${truncatedExcerpt}</p>
            
 
-        </div>
         </div>
     </div>
    </a>`;}

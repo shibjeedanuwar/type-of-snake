@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<div class="col-12 col-md-8 m-md-auto mt-md-5 mt-2 ">
+<div class="col-12 col-md-8 m-md-auto mt-md-5 mt-2 "> 
 <main>
     <?php if (have_posts()) : ?>
         <?php while (have_posts()) : the_post(); ?>
