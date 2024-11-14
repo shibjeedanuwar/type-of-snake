@@ -66,7 +66,7 @@ const declineButton = $('.declineButton');
 // Check if the user has already made a choice
 setTimeout(function() {
     if (getCookie('cookie_consent') === '') {
-        //consentBanner.show(); // Show the banner if no choice has been made
+   // consentBanner.show(); // Show the banner if no choice has been made
     }
 }, 15000); // 15 seconds
 
@@ -94,5 +94,8 @@ function getCookie(name) {
         return parts[0] === name ? decodeURIComponent(parts[1]) : r;
     }, '');
 }
+
+
+
    
 });

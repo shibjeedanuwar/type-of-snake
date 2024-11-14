@@ -3,11 +3,9 @@
 require_once get_template_directory() . '/inc/class-wp-bootstrap-navwalker.php';
 
 // Enqueue styles and scripts
-// Enqueue styles and scripts
 function snake_enqueue_styles() {
     // Deregister the default jQuery
     wp_deregister_script('jquery');
-    // wp_enqueue_script('jquery');
 
     // Enqueue jQuery from a CDN
     wp_enqueue_script('jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js', [], null, true);
@@ -22,22 +20,19 @@ function snake_enqueue_styles() {
     // Enqueue scripts
     wp_enqueue_script('bootstrap-js', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js', ['jquery'], null, true);
     wp_enqueue_script('admin-ajax-url', get_template_directory_uri() . '/assets/js/ajax.js', ['jquery'], null, true);
+    wp_localize_script('admin-ajax-url', 'ajax_object', array(
+        'ajax_url' => admin_url('admin-ajax.php'), // URL for AJAX requests
+    ));
 
-    // Enqueue Quill Editor Scripts and Styles
-    // Localize the AJAX URL
-    wp_localize_script('admin-ajax-url', 'my_ajax_obj', ['ajax_url' => admin_url('admin-ajax.php')]);
-    // Localize the script with your custom data
-    // wp_localize_script('my-script', 'wpNotesArgs', [
-    //     'ajax_url' => admin_url('admin-ajax.php'), // AJAX URL
-    //     'someData' => 'value', // Example of other data
-    //     'anotherData' => 'value2', // More data as needed
-    // ]);
-
-    // Custom scripts
     wp_enqueue_script('custom-script1', get_template_directory_uri() . '/assets/js/script.js', ['jquery'], null, true);
-    wp_enqueue_script('custom-static', get_template_directory_uri() . '/assets/js/static.js', ['jquery'], null, true);
-
+    wp_enqueue_script('static-js', get_template_directory_uri() . '/assets/js/static.js', ['jquery'], null, true);
+    wp_localize_script('static', 'ajax_object', array(
+        'ajax_url' => admin_url('admin-ajax.php'), // URL for AJAX requests
+    ));
     wp_enqueue_script('custom-slider-init', get_template_directory_uri() . '/assets/js/slider-init.js', ['jquery', 'bootstrap-js'], null, true);
+
+    // Initialize the carousel if needed
+    // echo '<script>document.addEventListener("DOMContentLoaded", function() { var myCarousel = document.querySelector("#carouselExample"); var carousel = new bootstrap.Carousel(myCarousel); });</script>';
 }
 add_action('wp_enqueue_scripts', 'snake_enqueue_styles');
 
@@ -124,6 +119,70 @@ class Custom_Walker_Nav_Menu extends Walker_Nav_Menu {
     }
 }
 
+
+
+//  home page post
+
+add_action('wp_ajax_get_snake_images', 'get_snake_images');
+add_action('wp_ajax_nopriv_get_snake_images', 'get_snake_images');
+
+function get_snake_images() {
+    global $wpdb;
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $title = isset($data['title']) ? sanitize_text_field($data['title']) : '';
+
+        $args = [
+            'post_type' => 'post',
+            'posts_per_page' => 4,
+            'orderby' => 'rand',
+            'category_name' => ($title) 
+        ];
+
+        $query = new WP_Query($args);
+        $posts = [];
+
+        if ($query->have_posts()) {
+            while ($query->have_posts()) {
+                $query->the_post();
+                $post_id = get_the_ID();
+                $thumbnail_id = get_post_thumbnail_id();
+                $alt_text = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+                
+                // Get snake_name from venomous_creatures table
+                // $snake_data = $wpdb->get_row(
+                //     $wpdb->prepare(
+                //         "SELECT snake_name 
+                //          FROM {$wpdb->prefix}venomous_creatures 
+                //          WHERE post_id = %d",
+                //         $post_id
+                //     )
+                // );
+
+                ///$snake_name = $snake_data ? $snake_data->snake_name : get_the_title();
+    
+                $posts[] = [
+                    'imageUrl' => get_the_post_thumbnail_url($post_id, 'full') ?: 'default-image.jpg',
+                    'imageAlt' => $alt_text,
+                    'permalink' => get_permalink(),
+                    'post_id' => $post_id
+                    //'name' => $snake_name // Using snake_name from the custom table
+                ];
+            }
+
+            wp_send_json(array(
+                'data' => $posts
+            ));
+        } else {
+            wp_send_json_error('No posts found.');
+        }
+    } else {
+        wp_send_json_error('Invalid request method.');
+    }
+
+    wp_die();
+}
 // Pagination Code
 add_action('wp_ajax_load_posts', 'load_posts_callback');
 add_action('wp_ajax_nopriv_load_posts', 'load_posts_callback');
@@ -197,8 +256,13 @@ function create_custom_table() {
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
         id mediumint(9) NOT NULL AUTO_INCREMENT,
         post_id bigint(20) NOT NULL UNIQUE,
-        venomous text NOT NULL,
-        antibiotic text NOT NULL,
+        snake_name text NOT NULL,
+        description text NOT NULL,
+        danger_level text NOT NULL,
+        temperament text NOT NULL,
+        size_range text NOT NULL,
+        habitat text NOT NULL,
+        lifespan text NOT NULL,
         PRIMARY KEY (id)
     ) $charset_collate;";
 
@@ -222,7 +286,6 @@ add_action('add_meta_boxes', 'add_custom_meta_boxes');
 
 // Enqueue Quill Editor Scripts and Styles
 function enqueue_quill_editor() {
-// Enqueue Quill Editor Scripts and Styles
     wp_enqueue_script('quill-js', 'https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js', [], null, true);
     wp_enqueue_style('quill-css', 'https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css');
     wp_enqueue_script('quill-init', get_template_directory_uri() . '/assets/js/quill-init.js', ['quill-js'], null, true);
@@ -236,21 +299,48 @@ function render_custom_meta_box($post) {
     wp_nonce_field('save_venomous_meta', 'venomous_meta_nonce');
 
     $table_name = $wpdb->prefix . 'venomous_creatures';
-    $data = $wpdb->get_row($wpdb->prepare("SELECT venomous, antibiotic FROM $table_name WHERE post_id = %d", $post->ID));
+    $data = $wpdb->get_row($wpdb->prepare("SELECT snake_name, description, danger_level, temperament, size_range, habitat, lifespan FROM $table_name WHERE post_id = %d", $post->ID));
 
-    $venomous = $data ? $data->venomous : '';
-    $antibiotic = $data ? $data->antibiotic : '';
+    $snake_name = $data ? $data->snake_name : '';
+    $description = $data ? $data->description : '';
+    $danger_level = $data ? $data->danger_level : '';
+    $temperament = $data ? $data->temperament : '';
+    $size_range = $data ? $data->size_range : '';
+    $habitat = $data ? $data->habitat : '';
+    $lifespan = $data ? $data->lifespan : '';
 
-    echo '<label for="venomous_editor"><strong>Venomous:</strong></label>';
-    echo '<div id="venomous_editor" style="height: 200px;">' . wp_kses_post($venomous) . '</div>';
-    echo '<label for="antibiotic_editor"><strong>Antibiotic:</strong></label>';
-    echo '<div id="antibiotic_editor" style="height: 200px;">' . wp_kses_post($antibiotic) . '</div>';
-    echo '<input type="hidden" name="venomous" id="venomous" value="' . esc_attr($venomous) . '">';
-    echo '<input type="hidden" name="antibiotic" id="antibiotic" value="' . esc_attr($antibiotic) . '">';
+    // Simple input for Snake Name
+    echo '<label for="snake_name"><strong>Snake Name:</strong></label>';
+    echo '<input type="text" name="snake_name" id="snake_name" value="' . esc_attr($snake_name) . '" style="width: 100%;">';
+
+    // Quill editor for Description
+    echo '<label for="description_editor"><strong>Description:</strong></label>';
+    echo '<div id="description_editor" style="height: 200px;">' . wp_kses_post($description) . '</div>';
+    echo '<input type="hidden" name="description" id="description" value="' . esc_attr($description) . '">';
+
+    // New fields for additional data with Quill editors
+    echo '<label for="danger_level_editor"><strong>Danger Level:</strong></label>';
+    echo '<div id="danger_level_editor" style="height: 200px;">' . wp_kses_post($danger_level) . '</div>';
+    echo '<input type="hidden" name="danger_level" id="danger_level" value="' . esc_attr($danger_level) . '">';
+
+    echo '<label for="temperament_editor"><strong>Temperament:</strong></label>';
+    echo '<div id="temperament_editor" style="height: 200px;">' . wp_kses_post($temperament) . '</div>';
+    echo '<input type="hidden" name="temperament" id="temperament" value="' . esc_attr($temperament) . '">';
+
+    echo '<label for="size_range_editor"><strong>Size Range:</strong></label>';
+    echo '<div id="size_range_editor" style="height: 200px;">' . wp_kses_post($size_range) . '</div>';
+    echo '<input type="hidden" name="size_range" id="size_range" value="' . esc_attr($size_range) . '">';
+
+    echo '<label for="habitat_editor"><strong>Habitat:</strong></label>';
+    echo '<div id="habitat_editor" style="height: 200px;">' . wp_kses_post($habitat) . '</div>';
+    echo '<input type="hidden" name="habitat" id="habitat" value="' . esc_attr($habitat) . '">';
+
+    echo '<label for="lifespan_editor"><strong>Lifespan:</strong></label>';
+    echo '<div id="lifespan_editor" style="height: 200px;">' . wp_kses_post($lifespan) . '</div>';
+    echo '<input type="hidden" name="lifespan" id="lifespan" value="' . esc_attr($lifespan) . '">';
 }
 
-
-
+// Save the custom meta box data
 function save_custom_meta_box_data($post_id) {
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
     if (!current_user_can('edit_post', $post_id)) return;
@@ -259,8 +349,13 @@ function save_custom_meta_box_data($post_id) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'venomous_creatures';
 
-    $venomous = isset($_POST['venomous']) ? wp_kses_post($_POST['venomous']) : '';
-    $antibiotic = isset($_POST['antibiotic']) ? wp_kses_post($_POST['antibiotic']) : '';
+    $snake_name = isset($_POST['snake_name']) ? wp_kses_post($_POST['snake_name']) : '';
+    $description = isset($_POST['description']) ? wp_kses_post($_POST['description']) : '';
+    $danger_level = isset($_POST['danger_level']) ? wp_kses_post($_POST['danger_level']) : '';
+    $temperament = isset($_POST['temperament']) ? wp_kses_post($_POST['temperament']) : '';
+    $size_range = isset($_POST['size_range']) ? wp_kses_post($_POST['size_range']) : '';
+    $habitat = isset($_POST['habitat']) ? wp_kses_post($_POST['habitat']) : '';
+    $lifespan = isset($_POST['lifespan']) ? wp_kses_post($_POST['lifespan']) : '';
 
     // Check if a row already exists
     $existing_entry = $wpdb->get_var($wpdb->prepare("SELECT id FROM $table_name WHERE post_id = %d", $post_id));
@@ -269,17 +364,34 @@ function save_custom_meta_box_data($post_id) {
         // Update the existing row
         $wpdb->update(
             $table_name,
-            ['venomous' => $venomous, 'antibiotic' => $antibiotic],
+            [
+                'snake_name' => $snake_name,
+                'description' => $description,
+                'danger_level' => $danger_level,
+                'temperament' => $temperament,
+                'size_range' => $size_range,
+                'habitat' => $habitat,
+                'lifespan' => $lifespan
+            ],
             ['post_id' => $post_id],
-            ['%s', '%s'],
+            ['%s', '%s', '%s', '%s', '%s', '%s', '%s'],
             ['%d']
         );
     } else {
         // Insert a new row
         $wpdb->insert(
             $table_name,
-            ['post_id' => $post_id, 'venomous' => $venomous, 'antibiotic' => $antibiotic],
-            ['%d', '%s', '%s']
+            [
+                'post_id' => $post_id,
+                'snake_name' => $snake_name,
+                'description' => $description,
+                'danger_level' => $danger_level,
+                'temperament' => $temperament,
+                'size_range' => $size_range,
+                'habitat' => $habitat,
+                'lifespan' => $lifespan
+            ],
+            ['%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s']
         );
     }
 }
@@ -291,9 +403,17 @@ function get_venomous_data($post_id) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'venomous_creatures';
 
-    $result = $wpdb->get_row($wpdb->prepare("SELECT venomous, antibiotic FROM $table_name WHERE post_id = %d", $post_id));
+    $result = $wpdb->get_row($wpdb->prepare("SELECT snake_name, description, danger_level, temperament, size_range, habitat, lifespan FROM $table_name WHERE post_id = %d", $post_id));
 
-    return $result ? ['venomous' => $result->venomous, 'antibiotic' => $result->antibiotic] : null;
+    return $result ? [
+        'snake_name' => $result->snake_name,
+        'description' => $result->description,
+        'danger_level' => $result->danger_level,
+        'temperament' => $result->temperament,
+        'size_range' => $result->size_range,
+        'habitat' => $result->habitat,
+        'lifespan' => $result->lifespan
+    ] : null;
 }
 
 

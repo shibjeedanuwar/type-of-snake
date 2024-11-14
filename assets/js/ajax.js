@@ -1,7 +1,9 @@
+document.addEventListener('DOMContentLoaded', () => {
+   
 let currentPage = 1; // Track the current page
 let totalPosts = 0; // Total number of posts
 const postsPerPage = 9; // Number of posts per page
-const adminUrl= my_ajax_obj.ajax_url;
+const adminUrl= ajax_object.ajax_url;
 const listButton = $('.list-view');
 const gridButton = $('.grid-view');
 const wrapper = $('#postContainer'); // Container for posts
@@ -61,8 +63,8 @@ function loadPosts(offset = 0) {
         },
         success: function(data) {
             const response = JSON.parse(data);
-            // console.log(data);
             const posts = response.posts;
+            console.log("hell"+posts);
             totalPosts = response.total; // Get total number of posts
             updatePagination(); // Update pagination after loading posts
 
@@ -169,7 +171,7 @@ $(document).ready(function() {
 listButton.on('click', function() {
     gridButton.removeClass('red');
     listButton.addClass('red');
-    wrapper.removeClass('grid').addClass('list');
+    wrapper.removeClass('grid-v').addClass('list');
     $('.item').css({
         width: '100%', // Full width for list view
         float: 'none'  // Remove float for list view
@@ -180,24 +182,11 @@ listButton.on('click', function() {
 gridButton.on('click', function() {
     listButton.removeClass('red');
     gridButton.addClass('red');
-    wrapper.removeClass('list').addClass('grid');
+    wrapper.removeClass('list').addClass('grid-v');
     $('.item').css({
         width: '', // Adjust as needed for grid view
         float: 'left' // Re-enable float for grid view
     });
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+});

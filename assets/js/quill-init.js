@@ -1,9 +1,13 @@
 document.addEventListener("DOMContentLoaded", function() {
     const initQuill = () => {
-        const venEditor = document.getElementById("venomous_editor");
-        const antiEditor = document.getElementById("antibiotic_editor");
+        const descriptionEditor = document.getElementById("description_editor");
+        const dangerLevelEditor = document.getElementById("danger_level_editor");
+        const temperamentEditor = document.getElementById("temperament_editor");
+        const sizeRangeEditor = document.getElementById("size_range_editor");
+        const habitatEditor = document.getElementById("habitat_editor");
+        const lifespanEditor = document.getElementById("lifespan_editor");
 
-        if (venEditor && antiEditor) {
+        if (descriptionEditor && dangerLevelEditor && temperamentEditor && sizeRangeEditor && habitatEditor && lifespanEditor) {
             const quillOptions = {
                 theme: "snow",
                 modules: {
@@ -21,19 +25,43 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             };
 
-            const venomousQuill = new Quill(venEditor, quillOptions);
-            const antibioticQuill = new Quill(antiEditor, quillOptions);
+            const descriptionQuill = new Quill(descriptionEditor, quillOptions);
+            const dangerLevelQuill = new Quill(dangerLevelEditor, quillOptions);
+            const temperamentQuill = new Quill(temperamentEditor, quillOptions);
+            const sizeRangeQuill = new Quill(sizeRangeEditor, quillOptions);
+            const habitatQuill = new Quill(habitatEditor, quillOptions);
+            const lifespanQuill = new Quill(lifespanEditor, quillOptions);
 
             // Set Quill content with existing data
-            venomousQuill.root.innerHTML = document.getElementById("venomous").value;
-            antibioticQuill.root.innerHTML = document.getElementById("antibiotic").value;
+            descriptionQuill.root.innerHTML = document.getElementById("description").value;
+            dangerLevelQuill.root.innerHTML = document.getElementById("danger_level").value;
+            temperamentQuill.root.innerHTML = document.getElementById("temperament").value;
+            sizeRangeQuill.root.innerHTML = document.getElementById("size_range").value;
+            habitatQuill.root.innerHTML = document.getElementById("habitat").value;
+            lifespanQuill.root.innerHTML = document.getElementById("lifespan").value;
 
-            venomousQuill.on("text-change", function() {
-                document.getElementById("venomous").value = venomousQuill.root.innerHTML;
+            descriptionQuill.on("text-change", function() {
+                document.getElementById("description").value = descriptionQuill.root.innerHTML;
             });
 
-            antibioticQuill.on("text-change", function() {
-                document.getElementById("antibiotic").value = antibioticQuill.root.innerHTML;
+            dangerLevelQuill.on("text-change", function() {
+                document.getElementById("danger_level").value = dangerLevelQuill.root.innerHTML;
+            });
+
+            temperamentQuill.on("text-change", function() {
+                document.getElementById("temperament").value = temperamentQuill.root.innerHTML;
+            });
+
+            sizeRangeQuill.on("text-change", function() {
+                document.getElementById("size_range").value = sizeRangeQuill.root.innerHTML;
+            });
+
+            habitatQuill.on("text-change", function() {
+                document.getElementById("habitat").value = habitatQuill.root.innerHTML;
+            });
+
+            lifespanQuill.on("text-change", function() {
+                document.getElementById("lifespan").value = lifespanQuill.root.innerHTML;
             });
         } else {
             console.error("Quill container elements not found.");

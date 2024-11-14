@@ -76,6 +76,12 @@
  
 }
 </style>
+
+
+
+
+
+
     
     <div id="app" class="max-w-7xl mx-auto px-4 py-8 relative">
       <!-- Main Content -->
@@ -86,24 +92,21 @@
         <div class="flex-1 flex justify-center">
           <div class="bg-slate-800 p-1 rounded-full inline-flex gap-1">
             <button id="nonVenomousButton" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all text-slate-400 hover:text-white">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21c-4.97 0-9-4.03-9-9s4.03-9 9-9 9 4.03 9 9-4.03 9-9 9z"></path>
-              </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-3.5 h-3.5">
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
               <span class="text-xs font-medium whitespace-nowrap">Non-venomous</span>
             </button>
             
             <button id="venomousButton" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all text-slate-400 hover:text-white">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21c-4.97 0-9-4.03-9-9s4.03-9 9-9 9 4.03 9 9-4.03 9-9 9z"></path>
-              </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-skull w-3.5 h-3.5">
+              <circle cx="9" cy="12" r="1"></circle><circle cx="15" cy="12" r="1"></circle><path d="M8 20v2h8v-2"></path><path d="m12.5 17-.5-1-.5 1h1z"></path><path d="M16 20a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20"></path></svg>
               <span class="text-xs font-medium">Venomous</span>
             </button>
           </div>
         </div>
         <button id="chatButton" class="flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 rounded-full transition-colors shadow-lg">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M21 16.5a2.5 2.5 0 01-2.5 2.5H6l-4 4V5.5A2.5 2.5 0 014.5 3h13A2.5 2.5 0 0120 5.5v11z"></path>
-          </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle w-5 h-5">
+          <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
           <span class="font-medium hidden sm:inline">Snake Chat</span>
         </button>
       </div>
@@ -113,22 +116,30 @@
         <div class="relative flex flex-col h-[calc(100vh-16rem)]">
           <div id="snakeDetails" class="overflow-y-auto" style="height: 50%;">
             <!-- Snake details content here -->
+            <!-- {{ update_snake_details_content }} -->
           </div>
           
           <!-- Mobile Horizontal Drag Divider -->
           <div id="dragDividerMobile" class="relative h-1 cursor-row-resize drag-divider-mobile bg-slate-600">
             <!-- Horizontal Line -->
-            <div class="absolute inset-0 h-0.5 bg-slate-600"></div>
+            <div class="absolute inset-0 h-0.5 bg-slate-600" style="display:none"></div>
             <!-- Drag Icon -->
             <div class="absolute w-8 h-8 left-1/2 -ml-4 -mt-4 bg-slate-700 rounded-full flex items-center justify-center grip">
-              <svg class="w-4 h-4 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01"></path>
-              </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-grip-vertical w-4 h-4">
+              <circle cx="9" cy="12" r="1"></circle>
+              <circle cx="9" cy="5" r="1"></circle>
+              <circle cx="9" cy="19" r="1"></circle>
+              <circle cx="15" cy="12" r="1"></circle>
+              <circle cx="15" cy="5" r="1">
+            </circle>
+            <circle cx="15" cy="19" r="1"></circle>
+          </svg>
             </div>
           </div>
 
           <div id="snakeGrid" class="overflow-y-auto" style="height: 50%;">
             <!-- Snake grid content here -->
+            <!-- {{ update_snake_grid_content }} -->
           </div>
         </div>
       </div>
@@ -141,12 +152,18 @@
         <!-- Update the dragDivider HTML -->
         <div id="dragDivider" class="relative w-1 cursor-col-resize drag-divider bg-slate-600" style="width: 0.5rem;">
           <!-- Vertical Line -->
-          <div class="absolute inset-0 w-0.5 bg-slate-600"></div>
+          <div class="absolute inset-0 w-0.5 bg-slate-600 "style="display:none"></div>
           <!-- Drag Icon -->
           <div class="absolute w-8 h-8 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-700 rounded-full flex items-center justify-center grip" style="top: 50%; left: calc(50% - 1.01rem);">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01"></path>
-            </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-grip-vertical w-4 h-4">
+              <circle cx="9" cy="12" r="1"></circle>
+              <circle cx="9" cy="5" r="1"></circle>
+              <circle cx="9" cy="19" r="1"></circle>
+              <circle cx="15" cy="12" r="1"></circle>
+              <circle cx="15" cy="5" r="1">
+            </circle>
+            <circle cx="15" cy="19" r="1"></circle>
+          </svg>
           </div>
         </div>
 

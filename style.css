@@ -2,7 +2,7 @@
 Theme Name: Type of Snake
 Author: shibjee
 Description: A custom WordPress theme named Type of Snake.
-Version: 1.0
+Version: 1.2.0
 License: GNU General Public License v2 or later
 Tags: custom, responsive, theme
 Text Domain: type-of-snake
@@ -351,7 +351,7 @@ a {
   
   }
 
-  .grid .mobile-category{
+  .grid-v .mobile-category{
     display:none
   }
   /* .list .mobile-category{
@@ -496,7 +496,7 @@ article .categories::after {
   position: relative;
 }
 
-.grid .item img {
+.grid-v .item img {
   display: inline-block;
   aspect-ratio: 16 / 9;
   border-radius: 0.25rem;
@@ -526,33 +526,30 @@ article .categories::after {
   transition: transform 0.5s ease;
 }
 
-
-.grid .details {
-  display: none; /* Hide details in grid view */
-}
-
-
-
-/* Grid View Styles */
-.grid .item {
+/* Updated from .grid to .grid-v */
+.grid-v .item {
   width: 30%; /* Four items side by side on desktop */
   margin: 1%; 
   float: left;
 }
 
+/* Updated from .grid to .grid-v */
+.grid-v .details {
+  display: none; /* Hide details in grid view */
+}
 
 .list .list-h2{
   display: none;
   
 }
 
-.grid .list-h2{
+.grid-v .list-h2{
   display: none;
   
 }
 
 
-.grid .mobile-category{
+.grid-v .mobile-category{
   display:none
 }
 
@@ -566,7 +563,7 @@ article .categories::after {
   .list .details {
     display: none;
   }
-  .grid .mobile-category{
+  .grid-v .mobile-category{
     display:none;
   }
 
@@ -587,7 +584,7 @@ article .categories::after {
       width: 100%; /* Full width for list view */
   }
 
-  .grid .item {
+  .grid-v .item {
       width: 48%; /* Two items side by side in grid view on mobile */
       float: left;
       margin: 1%; /* Margins for spacing */

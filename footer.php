@@ -17,10 +17,12 @@
 </div>
     </div>
     </div>
-    <footer class="footer ">
+    <footer class="footer  mt-3 ">
         <p>Copyright &copy; <?php echo date('Y'); ?> 
         <img src="<?php echo  get_template_directory_uri() . '/assets/images/type-of-snake.png'?>" class="" alt="logo" style="width:102px; height:auto; margin-top: -6px;"/>
         All Rights Reserved.</p>
+       <p> <b>Email:</b>contact@typeofsnake.com</p></br>
+       <p>Theme developed by  <a href="http://x.com/@shibjeedanuwar"class="text-primary"  target='_blank'>shibee danuwar</a></p>
     </footer>
     <?php wp_footer(); ?>
     

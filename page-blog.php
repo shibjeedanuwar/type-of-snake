@@ -1,5 +1,5 @@
 <?php 
- /* Template Name: XYZ Page */
+ /* Template Name: blog Page */
 get_header(); ?>
 <div class="row mt-md-5 mt-2">
     <div class="col-12 col-md-8 m-md-auto">
@@ -160,8 +160,8 @@ get_header(); ?>
 <!-- Search Popup Code End -->
 
 <main class="row mt-2">
-    <div class="col-12 col-md-8 m-auto" id="main-post-view">
-        <div class="wrapper grid" id="postContainer" data-page="1">
+    <div class="col-12 col-md-8 m-auto bootstrap-wrapper" id="main-post-view">
+        <div class="wrapper grid-v" id="postContainer" data-page="1">
             <!-- Items will be appended here by JavaScript -->
         </div>
     </div>
