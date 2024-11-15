@@ -315,17 +315,18 @@ const debouncedRenderData = debounce(async (title) => {
 nonVenomousButton.addEventListener('click', () => {
   isVenomous = false;
   updateToggleButtons();
-  debouncedRenderData('amet');
+  debouncedRenderData('	Non-Venomous snakes');
+
 });
 
 venomousButton.addEventListener('click', () => {
   isVenomous = true;
   updateToggleButtons();
-  debouncedRenderData('nobis');
+  debouncedRenderData('Venomous Snakes');
 });
 
 // Initial render
 updateToggleButtons();
-debouncedRenderData('nobis');
+debouncedRenderData('	Non-Venomous snakes');
 });
   
