@@ -7,8 +7,8 @@ function snake_enqueue_styles() {
     // Deregister the default jQuery
     wp_deregister_script('jquery');
 
-    // Enqueue jQuery from a CDN
-    wp_enqueue_script('jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js', [], null, true);
+      // Enqueue jQuery from CDN with high priority
+      wp_enqueue_script('jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js', [], null, false);
 
     // Enqueue styles
     wp_enqueue_style('remix-icons', 'https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css');

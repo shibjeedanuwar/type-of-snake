@@ -31,7 +31,21 @@
     transition: opacity 0.5s ease; /* Smooth transition */
   }
 </style>
-<div class="row mt-md-5 mt-1">
+	  <?php
+// Get the current post ID
+$post_id = get_the_ID();
+
+// Fetch data from your custom table based on post ID
+$table_name = $wpdb->prefix . 'venomous_creatures';
+$query = $wpdb->prepare("SELECT * FROM $table_name WHERE post_id = %d", $post_id);
+$results = $wpdb->get_results($query);
+
+// Get the first row if results exist
+$snake_data = !empty($results) ? $results[0] : null;
+
+?>
+
+<div class="row mt-md-3 mt-1">
 <div id="app" class="max-w-7xl mx-auto px-4 py-8 relative ">
       <!-- Main Content -->
       <!-- Toggle Filter and Chat Button -->
@@ -65,7 +79,6 @@
           <div id="snakeDetails" class="" >
             <!-- Snake details content here -->
             <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-            <div id="loading" style="display: none;">Loading...</div>
             <div class="carousel-inner">
                 <?php
                 // Initialize a flag for the first item
@@ -135,33 +148,95 @@
           </svg>
             </div>
           </div>
-
+     
           <div id="snakeGrid" class="overflow-y-auto absolute  " style="margin-top:19rem; height:20rem;">
             <!-- Snake grid content here -->
             <div class="space-y-4 sm:space-y-6">
             <div class="space-y-4 mt-3">
-            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-emerald-400">Non-venomous Species</h2>
-            <p class="text-slate-300 leading-relaxed tracking-wide text-sm sm:text-base">These gentle species lack venom glands and typically subdue prey through constriction. They are generally docile and make excellent subjects for observation and study.</p>
+<!-- 	snake name			 -->
+				
+    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-emerald-400">
+	 
+	 <?php
+                if ($snake_data ) {
+                    echo $snake_data->snake_name;
+                } else {
+                    $isVenomous = false;
+                    $categories = get_the_category();
+                    foreach ($categories as $category) {
+                        if ($category->slug === 'venomous') {
+                            $isVenomous = true;
+                            break;
+                        }
+                    }
+                    echo '<b>' . $category->name . ' snakes</b>';
+
+                }
+		?>
+				
+		</h2>
+
+				<!-- 	snake discription			 -->
+           
+				<p class="text-slate-300 leading-relaxed tracking-wide text-sm sm:text-base"> <?php
+                if ($snake_data ) {
+                    echo $snake_data->description;
+                } else {
+                    $description = $isVenomous
+    ? 'These species possess highly potent venom designed to immobilize prey and aid in digestion. While they rarely seek human contact, their bites require immediate medical attention.'
+    : 'These gentle species lack venom glands and typically subdue prey through constriction. They are generally docile and make excellent subjects for observation and study.';
+                }
+                ?>
+				</p>
+				<!-- 	snake discription			 -->
+				
           </div>
-            <h3 class="text-lg sm:text-xl font-semibold tracking-wide text-slate-200">Key Characteristics</h3>
+				
+           <h3 class="text-lg sm:text-xl font-semibold tracking-wide text-slate-200">Key Characteristics</h3>
             <div class="grid gap-3 sm:gap-4">
+				<!-- Danger Level -->
               <div class="flex items-start gap-3 bg-slate-800/50 p-3 sm:p-4 rounded-lg">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-triangle w-5 h-5 text-red-400 mt-1 flex-shrink-0">
                 <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z">
                 </path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
                 <div>
+					
                   <h4 class="font-medium mb-1">Danger Level</h4>
-                  <p class="text-slate-300 text-sm">Generally harmless to humans. May bite defensively but not dangerous.</p>
+                  <p class="text-slate-300 text-sm">
+					     <?php
+                if ($snake_data ) {
+                    echo $snake_data->danger_level;
+                } else {
+                  
+                    echo $isVenomous 
+                        ? 'Generally dangerous. Bites can be fatal without immediate treatment.' 
+                        : 'Generally harmless to humans. May bite defensively but not dangerous.';
+                }
+                ?>
+            
+					</p>
                 </div>
               </div>
+				 <!-- Temperament -->
               <div class="flex items-start gap-3 bg-slate-800/50 p-3 sm:p-4 rounded-lg">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-5 h-5 text-pink-400 mt-1 flex-shrink-0">
               <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
                 <div>
                   <h4 class="font-medium mb-1">Temperament</h4>
-                  <p class="text-slate-300 text-sm">Typically docile and calm. Many species adapt well to handling.</p>
+                   <p class="text-slate-300 text-sm">
+                <?php
+                if ($snake_data ) {
+                    echo $snake_data->temperament;
+                } else {
+                    echo $isVenomous 
+                        ? 'Usually shy and reclusive. Will defend aggressively if threatened.' 
+                        : 'Typically docile and calm. Many species adapt well to handling.';
+                }
+                ?>
+            </p>
                 </div>
               </div>
+				    <!-- Size Range -->
               <div class="flex items-start gap-3 bg-slate-800/50 p-3 sm:p-4 rounded-lg">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ruler w-5 h-5 text-blue-400 mt-1 flex-shrink-0">
                 <path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"></path>
@@ -169,24 +244,57 @@
                 <path d="m8.5 6.5 2-2"></path><path d="m17.5 15.5 2-2"></path></svg>
                 <div>
                   <h4 class="font-medium mb-1">Size Range</h4>
-                  <p class="text-slate-300 text-sm">Generally 3-6 feet, with some species reaching up to 8 feet.</p>
+                  <p class="text-slate-300 text-sm">
+                <?php
+                if ($snake_data ) {
+                    echo $snake_data->size_range;
+                } else {
+                    echo $isVenomous 
+                        ? 'Varies greatly. Most species range from 4-8 feet in length.' 
+                        : 'Generally 3-6 feet, with some species reaching up to 8 feet.';
+                }
+                ?>
+            </p>
                 </div>
               </div>
+				
+				 <!-- Habitat -->
               <div class="flex items-start gap-3 bg-slate-800/50 p-3 sm:p-4 rounded-lg">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-earth w-5 h-5 text-green-400 mt-1 flex-shrink-0"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"></path><path d="M7 3.34V5a3 3 0 0 0 3 3v0a2 2 0 0 1 2 2v0c0 1.1.9 2 2 2v0a2 2 0 0 0 2-2v0c0-1.1.9-2 2-2h3.17"></path>
                 <path d="M11 21.95V18a2 2 0 0 0-2-2v0a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"></path>
                 <circle cx="12" cy="12" r="10"></circle></svg>
                 <div>
                   <h4 class="font-medium mb-1">Habitat</h4>
-                  <p class="text-slate-300 text-sm">Adaptable to various habitats, including forests and grasslands.</p>
+                 <p class="text-slate-300 text-sm">
+                <?php
+                if ($snake_data ) {
+                    echo $snake_data->habitat;
+                } else {
+                    echo $isVenomous 
+                        ? 'Found in diverse environments from deserts to rainforests.' 
+                        : 'Adaptable to various habitats, including forests and grasslands.';
+                }
+                ?>
+            </p>
                 </div>
               </div>
+				<!-- Lifespan -->
               <div class="flex items-start gap-3 bg-slate-800/50 p-3 sm:p-4 rounded-lg">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock3 w-5 h-5 text-yellow-400 mt-1 flex-shrink-0">
               <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16.5 12"></polyline></svg>
                 <div>
                   <h4 class="font-medium mb-1">Lifespan</h4>
-                  <p class="text-slate-300 text-sm">Can live 20-30 years in captivity with proper care.</p>
+                 <p class="text-slate-300 text-sm">
+                <?php
+                if ($snake_data ) {
+                    echo $snake_data->lifespan;
+                } else {
+                    echo $isVenomous 
+                        ? 'Average 10-15 years in the wild, up to 20 in captivity.' 
+                        : 'Can live 20-30 years in captivity with proper care.';
+                }
+                ?>
+            </p>
                 </div>
               </div>
             </div>
@@ -200,70 +308,88 @@
 
       <div class="hidden lg:flex relative h-[calc(100vh-12rem)] mt-8 min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white mw-100 mt-1 p-2 mw-100 p-3 mb-3 shadow">
         <div id="snakeDetailsLg" class="overflow-y-auto" style="width: 50%;">
-        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-            <div id="loading" style="display: none;">Loading...</div>
-            <div class="carousel-inner">
-                <?php
-                // Initialize a flag for the first item
-                $is_first = true;
+			
+			
+      <div id="carouselExample1" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <?php
+        $is_first = true;
 
-                // Get the featured image
-                if (has_post_thumbnail()) : ?>
-                    <div class="carousel-item <?php echo $is_first ? 'active' : ''; ?>">
-                        <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" class="d-block w-100" alt="<?php echo esc_attr(get_the_title()); ?>">
-                    </div>
-                    <?php $is_first = false; ?>
-                <?php endif; ?>
-
-                <?php
-                // Get images in post content
-                $content = get_the_content();
-                preg_match_all('/<img[^>]+src="([^">]+)"/', $content, $matches);
-                foreach ($matches[1] as $image_url) : ?>
-                    <div class="carousel-item <?php echo $is_first ? 'active' : ''; ?>">
-                        <img src="<?php echo esc_url($image_url); ?>" class="d-block w-100" alt="">
-                    </div>
-                    <?php $is_first = false; ?>
-                <?php endforeach; ?>
-
-                <?php
-                // Get attached images
-                $attachments = get_attached_media('image', get_the_ID());
-                foreach ($attachments as $attachment) : ?>
-                    <div class="carousel-item <?php echo $is_first ? 'active' : ''; ?>">
-                        <img src="<?php echo esc_url(wp_get_attachment_url($attachment->ID)); ?>" class="d-block w-100" alt="<?php echo esc_attr(get_the_title($attachment->ID)); ?>">
-                    </div>
-                    <?php $is_first = false; ?>
-                <?php endforeach; ?>
+        if (has_post_thumbnail()) : ?>
+            <div class="carousel-item <?php echo $is_first ? 'active' : ''; ?>">
+                <img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" class="d-block w-100" alt="<?php echo esc_attr(get_the_title()); ?>">
             </div>
+            <?php $is_first = false; ?>
+        <?php endif; ?>
 
-            <!-- Indicators -->
-            <div class="carousel-indicators">
-                <?php
-                // Count total slides
-                $total_slides = (has_post_thumbnail() ? 1 : 0) + count($matches[1]) + count($attachments);
-                for ($i = 0; $i < $total_slides; $i++) : ?>
-                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="<?php echo $i; ?>" 
-                            class="<?php echo $i === 0 ? 'active' : ''; ?>" 
-                            aria-current="<?php echo $i === 0 ? 'true' : 'false'; ?>" 
-                            aria-label="Slide <?php echo $i + 1; ?>"></button>
-                <?php endfor; ?>
+        <?php
+        $content = get_the_content();
+        preg_match_all('/<img[^>]+src="([^">]+)"/', $content, $matches);
+        foreach ($matches[1] as $image_url) : ?>
+            <div class="carousel-item <?php echo $is_first ? 'active' : ''; ?>">
+                <img src="<?php echo esc_url($image_url); ?>" class="d-block w-100" alt="">
             </div>
+            <?php $is_first = false; ?>
+        <?php endforeach; ?>
 
-            <!-- Controls -->
-            <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button> -->
-        </div>
+        <?php
+        $attachments = get_attached_media('image', get_the_ID());
+        foreach ($attachments as $attachment) : ?>
+            <div class="carousel-item <?php echo $is_first ? 'active' : ''; ?>">
+                <img src="<?php echo esc_url(wp_get_attachment_url($attachment->ID)); ?>" class="d-block w-100" alt="<?php echo esc_attr(get_the_title($attachment->ID)); ?>">
+            </div>
+            <?php $is_first = false; ?>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Indicators -->
+    <div class="carousel-indicators">
+        <?php
+        $total_slides = (has_post_thumbnail() ? 1 : 0) + count($matches[1]) + count($attachments);
+        for ($i = 0; $i < $total_slides; $i++) : ?>
+            <button type="button" data-bs-target="#carouselExample1" data-bs-slide-to="<?php echo $i; ?>" 
+                    class="<?php echo $i === 0 ? 'active' : ''; ?>" 
+                    aria-current="<?php echo $i === 0 ? 'true' : 'false'; ?>" 
+                    aria-label="Slide <?php echo $i + 1; ?>"></button>
+        <?php endfor; ?>
+    </div>
+</div>
           <!-- Snake details content here -->
           <div class="space-y-4 mt-3">
-            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-emerald-400">Non-venomous Species</h2>
-            <p class="text-slate-300 leading-relaxed tracking-wide text-sm sm:text-base">These gentle species lack venom glands and typically subdue prey through constriction. They are generally docile and make excellent subjects for observation and study.</p>
+            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-emerald-400">
+				<?php
+                if ($snake_data) {
+                    echo $snake_data->snake_name;
+                } else {
+                    $isVenomous = false;
+                    $categories = get_the_category();
+                    foreach ($categories as $category) {
+                        if ($category->slug === 'venomous') {
+                            $isVenomous = true;
+                            break;
+                        }
+                    }
+                    echo '<b>' . $category->name . '</b>';
+
+                }
+		?>
+			  </h2>
+         <!-- 	snake discription			 -->
+           
+				<p class="text-slate-300 leading-relaxed tracking-wide text-sm sm:text-base"> 
+					<?php
+                if ($snake_data) {
+                    echo $snake_data->description;
+                } else {
+                   echo $description = $isVenomous
+    ? 'These species possess highly potent venom designed to immobilize prey and aid in digestion. While they rarely seek human contact, their bites require immediate medical attention.'
+    : 'These gentle species lack venom glands and typically subdue prey through constriction. They are generally docile and make excellent subjects for observation and study.';
+                }
+                ?>
+				</p>
+			 
+				<!-- 	snake discription			 -->
+			  
           </div>
         </div>
         
@@ -300,7 +426,19 @@
                 </path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
                 <div>
                   <h4 class="font-medium mb-1">Danger Level</h4>
-                  <p class="text-slate-300 text-sm">Generally harmless to humans. May bite defensively but not dangerous.</p>
+                  <p class="text-slate-300 text-sm">
+					     <?php
+                if ($snake_data) {
+                    echo $snake_data->danger_level;
+                } else {
+                    
+                    echo $isVenomous 
+                        ? 'Generally dangerous. Bites can be fatal without immediate treatment.' 
+                        : 'Generally harmless to humans. May bite defensively but not dangerous.';
+                }
+                ?>
+            
+					</p>
                 </div>
               </div>
               <div class="flex items-start gap-3 bg-slate-800/50 p-3 sm:p-4 rounded-lg">
@@ -308,7 +446,17 @@
               <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
                 <div>
                   <h4 class="font-medium mb-1">Temperament</h4>
-                  <p class="text-slate-300 text-sm">Typically docile and calm. Many species adapt well to handling.</p>
+                  <p class="text-slate-300 text-sm">
+                <?php
+                if ($snake_data) {
+                    echo $snake_data->temperament;
+                } else {
+                    echo $isVenomous 
+                        ? 'Usually shy and reclusive. Will defend aggressively if threatened.' 
+                        : 'Typically docile and calm. Many species adapt well to handling.';
+                }
+                ?>
+            </p>
                 </div>
               </div>
               <div class="flex items-start gap-3 bg-slate-800/50 p-3 sm:p-4 rounded-lg">
@@ -318,7 +466,17 @@
                 <path d="m8.5 6.5 2-2"></path><path d="m17.5 15.5 2-2"></path></svg>
                 <div>
                   <h4 class="font-medium mb-1">Size Range</h4>
-                  <p class="text-slate-300 text-sm">Generally 3-6 feet, with some species reaching up to 8 feet.</p>
+                 <p class="text-slate-300 text-sm">
+                <?php
+                if ($snake_data) {
+                    echo $snake_data->size_range;
+                } else {
+                    echo $isVenomous 
+                        ? 'Varies greatly. Most species range from 4-8 feet in length.' 
+                        : 'Generally 3-6 feet, with some species reaching up to 8 feet.';
+                }
+                ?>
+            </p>
                 </div>
               </div>
               <div class="flex items-start gap-3 bg-slate-800/50 p-3 sm:p-4 rounded-lg">
@@ -327,7 +485,17 @@
                 <circle cx="12" cy="12" r="10"></circle></svg>
                 <div>
                   <h4 class="font-medium mb-1">Habitat</h4>
-                  <p class="text-slate-300 text-sm">Adaptable to various habitats, including forests and grasslands.</p>
+                <p class="text-slate-300 text-sm">
+                <?php
+                if ($snake_data) {
+                    echo $snake_data->habitat;
+                } else {
+                    echo $isVenomous 
+                        ? 'Found in diverse environments from deserts to rainforests.' 
+                        : 'Adaptable to various habitats, including forests and grasslands.';
+                }
+                ?>
+            </p>
                 </div>
               </div>
               <div class="flex items-start gap-3 bg-slate-800/50 p-3 sm:p-4 rounded-lg">
@@ -335,7 +503,17 @@
               <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16.5 12"></polyline></svg>
                 <div>
                   <h4 class="font-medium mb-1">Lifespan</h4>
-                  <p class="text-slate-300 text-sm">Can live 20-30 years in captivity with proper care.</p>
+                   <p class="text-slate-300 text-sm">
+                <?php
+                if ($snake_data) {
+                    echo $snake_data->lifespan;
+                } else {
+                    echo $isVenomous 
+                        ? 'Average 10-15 years in the wild, up to 20 in captivity.' 
+                        : 'Can live 20-30 years in captivity with proper care.';
+                }
+                ?>
+            </p>
                 </div>
               </div>
             </div>
@@ -381,7 +559,6 @@
 
        </article>
     </div>
-    <!-- ======================================================= -->
   
     </div>
 <script>
