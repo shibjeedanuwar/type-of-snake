@@ -1,0 +1,27 @@
+name: Deploy WordPress Theme
+
+on:
+  push:
+    branches:
+      - main  # Change to your default branch if different
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install FTP Deploy Action
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ftp.typeofsnake.com
+          username: snake_theme@theme.typeofsnake.com
+          password: Sum@n7274726
+          local-dir: ./type-of-snake  # Update to your theme folder name
+          remote-dir: /home/seotag5/theme.typeofsnake.com/wp-content/themes/type-of-snake  # Path to your remote theme folder
+
+      - name: Clear WordPress Cache (Optional)
+        run: |
+          curl -X POST https://theme.typeofsnake.com/wp-admin/admin-ajax.php?action=clear_cache
