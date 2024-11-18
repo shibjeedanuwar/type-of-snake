@@ -11,16 +11,16 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Updated to the latest version
 
-      - name: Install FTP Deploy Action
-        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      - name: Deploy to FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0  # Check for the latest version
         with:
-          server: ftp.typeofsnake.com
-          username: snake_theme@theme.typeofsnake.com
-          password: Sum@n7274726
-          local-dir: ./type-of-snake/  # Update to your theme folder name
-          remote-dir: /home/seotag5/theme.typeofsnake.com/wp-content/themes/type-of-snake  # Path to your remote theme folder
+          server: ${{ ftp.typeofsnake.com }}
+          username: ${{ snake_theme@theme.typeofsnake.com }}
+          password: ${{ Sum@n7274726 }}
+          local-dir: ./type-of-snake/  # Ensure this directory exists
+          server-dir: /home/seotag5/theme.typeofsnake.com/wp-content/themes/type-of-snake  # Correct input name
 
       - name: Clear WordPress Cache (Optional)
         run: |
