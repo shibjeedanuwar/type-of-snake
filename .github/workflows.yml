@@ -18,5 +18,5 @@ jobs:
           server: ftp.typeofsnake.com
           username: ${{ snake_theme@theme.typeofsnake.com}}
           password: ${{ Sum@n7274726 }}
-          local-dir: ./type-of-snake
+          local-dir: ./type-of-snake/
           remote-dir: /home/seotag5/theme.typeofsnake.com/wp-content/themes/type-of-snake
