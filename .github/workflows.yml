@@ -1,0 +1,22 @@
+name: Deploy Theme
+
+on:
+  push:
+    branches:
+      - main  # or your main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        with:
+          server: ftp.typeofsnake.com
+          username: ${{ snake_theme@theme.typeofsnake.com}}
+          password: ${{ Sum@n7274726 }}
+          local-dir: ./type-of-snake
+          remote-dir: /home/seotag5/theme.typeofsnake.com/wp-content/themes/type-of-snake
