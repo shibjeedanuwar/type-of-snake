@@ -1,15 +1,16 @@
 /*
-Theme Name: Type of Snake
-Author: shibjee
-Description: A custom WordPress theme named Type of Snake.
-Version: 1.2.0
-License: GNU General Public License v2 or later
-Tags: custom, responsive, theme
-Text Domain: type-of-snake
+Theme Name: type-of-snake
+Theme URI: https://github.com/shibjeedanuwar/type-of-snake.git
+Description: Serpentia is a sleek WordPress theme designed specifically for snake enthusiasts. Its responsive layout ensures a seamless experience on all devices, while customizable features allow you to showcase your content beautifully. With a focus on SEO optimization and social media integration, Serpentia helps your blog reach a wider audience. Perfect for sharing care tips, species profiles, and personal stories, this theme combines aesthetics and functionality to elevate your snake blog.
+Version: 1.2.1
+Author: shibjee danuwar
+Author URI: Your https://shibjeedanuwar.com
+GitHub Theme URI: https://github.com/shibjeedanuwar/type-of-snake.git
+GitHub Branch: main
 */
 /* header navbar menu */
-@import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500&display=swap");
-
+/* @import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500&display=swap"); */
+g
 :root {
   --header-height: 3.5rem;
 
