@@ -1,80 +1,105 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const chatButton = document.getElementById('chatButton');
-  const chatInterface = document.getElementById('chatInterface');
-  const closeChat = document.getElementById('closeChat');
-  const nonVenomousButton = document.getElementById('nonVenomousButton');
-  const venomousButton = document.getElementById('venomousButton');
-  
-  const snakeDetails = document.getElementById('snakeDetails');
-  const snakeGrid = document.getElementById('snakeGrid');
-  const snakeDetailsLg = document.getElementById('snakeDetailsLg');
-  const snakeGridLg = document.getElementById('snakeGridLg');
-  const dragDivider = document.getElementById('dragDivider');
-  const dragIcon = dragDivider ? dragDivider.querySelector('div') : null;
-  const chatForm = document.getElementById('chatForm');
-  const chatInput = document.getElementById('chatInput');
-  const chatMessages = document.getElementById('chatMessages');
-  // const sendUrl = my_ajax_obj.ajax_url;
+  // Get elements with null checks
+  const elements = {
+    chatButton: document.getElementById('chatButton') || null,
+    chatInterface: document.getElementById('chatInterface') || null,
+    closeChat: document.getElementById('closeChat') || null,
+    nonVenomousButton: document.getElementById('nonVenomousButton'),
+    venomousButton: document.getElementById('venomousButton'),
+    snakeDetails: document.getElementById('snakeDetails'),
+    snakeGrid: document.getElementById('snakeGrid'),
+    snakeDetailsLg: document.getElementById('snakeDetailsLg'),
+    snakeGridLg: document.getElementById('snakeGridLg'),
+    dragDivider: document.getElementById('dragDivider'),
+    chatForm: document.getElementById('chatForm') || null,
+    chatInput: document.getElementById('chatInput') || null,
+    chatMessages: document.getElementById('chatMessages') || null
+  };
+
+  const dragIcon = elements.dragDivider ? elements.dragDivider.querySelector('div') : null;
   let isDragging = false;
 
-   // Mobile drag functionality
-   const dragDividerMobile = document.getElementById('dragDividerMobile');
-//    const snakeDetails = document.getElementById('snakeDetails');
-//    const snakeGrid = document.getElementById('snakeGrid');
-   let isMobileDragging = false;
- 
-   if (dragDividerMobile) {
-       const handleMobileMouseDown = (e) => {
-         e.preventDefault();
-         isMobileDragging = true;
-         dragDividerMobile.classList.add('dragging-mobile');
-       };
- 
-       const handleMobileMouseMove = (e) => {
-         if (!isMobileDragging) return;
- 
-         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-         const container = dragDividerMobile.parentElement;
-         const containerRect = container.getBoundingClientRect();
-         const containerHeight = containerRect.height;
-         const relativeY = clientY - containerRect.top;
-         const position = (relativeY / containerHeight) * 100;
-         const clampedPosition = Math.min(Math.max(20, position), 80);
- 
-         if (snakeDetails && snakeGrid) {
-             snakeDetails.style.height = `${clampedPosition}%`;
-             snakeGrid.style.height = `${100 - clampedPosition}%`;
-         }
-       };
- 
-       const handleMobileMouseUp = () => {
-         isMobileDragging = false;
-         dragDividerMobile.classList.remove('dragging-mobile');
-       };
- 
-       // Mobile mouse events
-       dragDividerMobile.addEventListener('mousedown', handleMobileMouseDown);
-       window.addEventListener('mousemove', handleMobileMouseMove);
-       window.addEventListener('mouseup', handleMobileMouseUp);
- 
-       // Mobile touch events
-       dragDividerMobile.addEventListener('touchstart', handleMobileMouseDown, { passive: false });
-       window.addEventListener('touchmove', handleMobileMouseMove, { passive: false });
-       window.addEventListener('touchend', handleMobileMouseUp);
- 
-       // Prevent mobile drag interference with chat
-       dragDividerMobile.addEventListener('mousedown', (e) => {
-         e.stopPropagation();
-       });
-   }
+  // Initialize chat functionality only if all required elements exist
+  if (elements.chatButton && elements.chatInterface && elements.closeChat) {
+    elements.chatButton.addEventListener('click', () => {
+      elements.chatInterface.classList.toggle('translate-x-full');
+    });
+
+    elements.closeChat.addEventListener('click', () => {
+      elements.chatInterface.classList.add('translate-x-full');
+    });
+  }
+
+  if (elements.chatForm && elements.chatInput && elements.chatMessages) {
+    elements.chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const message = elements.chatInput.value.trim();
+      if (message) {
+        addMessage(message, true);
+        elements.chatInput.value = '';
+        setTimeout(() => {
+          addMessage("Thanks for your message! I'd be happy to help you learn more about snakes. We are working on this feature and it will be available very soon.", false);
+        }, 1000);
+      }
+    });
+  }
+
+  // Mobile drag functionality
+  const dragDividerMobile = document.getElementById('dragDividerMobile');
+  let isMobileDragging = false;
+
+  if (dragDividerMobile) {
+    const handleMobileMouseDown = (e) => {
+      e.preventDefault();
+      isMobileDragging = true;
+      dragDividerMobile.classList.add('dragging-mobile');
+    };
+
+    const handleMobileMouseMove = (e) => {
+      if (!isMobileDragging) return;
+
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const container = dragDividerMobile.parentElement;
+      const containerRect = container.getBoundingClientRect();
+      const containerHeight = containerRect.height;
+      const relativeY = clientY - containerRect.top;
+      const position = (relativeY / containerHeight) * 100;
+      const clampedPosition = Math.min(Math.max(20, position), 80);
+
+      if (elements.snakeDetails && elements.snakeGrid) {
+        elements.snakeDetails.style.height = `${clampedPosition}%`;
+        elements.snakeGrid.style.height = `${100 - clampedPosition}%`;
+      }
+    };
+
+    const handleMobileMouseUp = () => {
+      isMobileDragging = false;
+      dragDividerMobile.classList.remove('dragging-mobile');
+    };
+
+    // Mobile mouse events
+    dragDividerMobile.addEventListener('mousedown', handleMobileMouseDown);
+    window.addEventListener('mousemove', handleMobileMouseMove);
+    window.addEventListener('mouseup', handleMobileMouseUp);
+
+    // Mobile touch events
+    dragDividerMobile.addEventListener('touchstart', handleMobileMouseDown, { passive: false });
+    window.addEventListener('touchmove', handleMobileMouseMove, { passive: false });
+    window.addEventListener('touchend', handleMobileMouseUp);
+
+    // Prevent mobile drag interference with chat
+    dragDividerMobile.addEventListener('mousedown', (e) => {
+      e.stopPropagation();
+    });
+  }
 
   // Update drag icon position
   function updateDragIconPosition() {
     if (dragIcon) {
-        const rect = dragDivider.getBoundingClientRect();
-        dragIcon.style.left = `${rect.left}px`;
-        dragIcon.style.top = '50%';
-        dragIcon.style.transform = 'translateY(-50%)';
+      const rect = elements.dragDivider.getBoundingClientRect();
+      dragIcon.style.left = `${rect.left}px`;
+      dragIcon.style.top = '50%';
+      dragIcon.style.transform = 'translateY(-50%)';
     }
   }
 
@@ -84,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const handleMouseDown = (e) => {
     e.preventDefault();
     isDragging = true;
-    dragDivider.classList.add('dragging');
+    elements.dragDivider.classList.add('dragging');
   };
 
   const handleMouseMove = (e) => {
@@ -95,25 +120,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const position = (clientX / containerWidth) * 100;
     const clampedPosition = Math.min(Math.max(20, position), 80);
 
-    if (snakeDetailsLg && snakeGridLg) {
-        snakeDetailsLg.style.width = `${clampedPosition}%`;
-        snakeGridLg.style.width = `${100 - clampedPosition}%`;
-        updateDragIconPosition();
+    if (elements.snakeDetailsLg && elements.snakeGridLg) {
+      elements.snakeDetailsLg.style.width = `${clampedPosition}%`;
+      elements.snakeGridLg.style.width = `${100 - clampedPosition}%`;
+      updateDragIconPosition();
     }
   };
 
   const handleMouseUp = () => {
     isDragging = false;
-    dragDivider.classList.remove('dragging');
+    elements.dragDivider.classList.remove('dragging');
   };
 
   // Mouse events
-  dragDivider.addEventListener('mousedown', handleMouseDown);
+  elements.dragDivider.addEventListener('mousedown', handleMouseDown);
   window.addEventListener('mousemove', handleMouseMove);
   window.addEventListener('mouseup', handleMouseUp);
 
   // Touch events
-  dragDivider.addEventListener('touchstart', handleMouseDown, { passive: false });
+  elements.dragDivider.addEventListener('touchstart', handleMouseDown, { passive: false });
   window.addEventListener('touchmove', handleMouseMove, { passive: false });
   window.addEventListener('touchend', handleMouseUp);
 
@@ -121,65 +146,34 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', updateDragIconPosition);
 
   // Prevent drag interference with chat
-  dragDivider.addEventListener('mousedown', (e) => {
+  elements.dragDivider.addEventListener('mousedown', (e) => {
     e.stopPropagation();
   });
 
   let isVenomous = false;
 
-  chatButton.addEventListener('click', () => {
-    chatInterface.classList.toggle('translate-x-full');
-  });
-
-  closeChat.addEventListener('click', () => {
-    chatInterface.classList.add('translate-x-full');
-  });
-
-  chatForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const message = chatInput.value.trim();
-    if (message) {
-      addMessage(message, true);
-      chatInput.value = '';
-      setTimeout(() => {
-        addMessage("Thanks for your message! I'd be happy to help you learn more about snakes. We are working on this feature and it will be available very soon.", false);
-      }, 1000);
-    }
-  });
-
-  function addMessage(text, isUser) {
-    const messageElement = document.createElement('div');
-    messageElement.className = `${isUser ? 'bg-emerald-500 ml-auto' : 'bg-slate-800 mr-auto'} rounded-lg p-3 max-w-[80%]`;
-    messageElement.innerHTML = `<p class="text-sm">${text}</p>`;
-    chatMessages.appendChild(messageElement);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
-  
-
-
   function updateToggleButtons() {
     if (isVenomous) {
-      venomousButton.classList.add('bg-emerald-500', 'text-white');
-      nonVenomousButton.classList.remove('bg-emerald-500', 'text-white');
-      nonVenomousButton.classList.add('text-slate-400');
+      elements.venomousButton.classList.add('bg-emerald-500', 'text-white');
+      elements.nonVenomousButton.classList.remove('bg-emerald-500', 'text-white');
+      elements.nonVenomousButton.classList.add('text-slate-400');
     } else {
-      nonVenomousButton.classList.add('bg-emerald-500', 'text-white');
-      venomousButton.classList.remove('bg-emerald-500', 'text-white');
-      venomousButton.classList.add('text-slate-400');
+      elements.nonVenomousButton.classList.add('bg-emerald-500', 'text-white');
+      elements.venomousButton.classList.remove('bg-emerald-500', 'text-white');
+      elements.venomousButton.classList.add('text-slate-400');
     }
   }
   function showLoader() {
     const loaderHTML = '<div class="loader mt-5 mb-3 mx-auto"></div>';
-    if (snakeGrid && snakeGridLg) {
-      snakeGrid.innerHTML = loaderHTML;
-      snakeGridLg.innerHTML = loaderHTML;
+    if (elements.snakeGrid && elements.snakeGridLg) {
+      elements.snakeGrid.innerHTML = loaderHTML;
+      elements.snakeGridLg.innerHTML = loaderHTML;
     }
-    if (snakeDetails && snakeDetailsLg && snakeGrid && snakeGridLg) {
-      snakeDetails.innerHTML = loaderHTML;
-      snakeDetailsLg.innerHTML = loaderHTML;
-      snakeGrid.innerHTML = loaderHTML;
-      snakeGridLg.innerHTML = loaderHTML;
+    if (elements.snakeDetails && elements.snakeDetailsLg && elements.snakeGrid && elements.snakeGridLg) {
+      elements.snakeDetails.innerHTML = loaderHTML;
+      elements.snakeDetailsLg.innerHTML = loaderHTML;
+      elements.snakeGrid.innerHTML = loaderHTML;
+      elements.snakeGridLg.innerHTML = loaderHTML;
     }
 
   }
@@ -266,11 +260,11 @@ document.addEventListener('DOMContentLoaded', () => {
       </a>
   `).join('') : '<p>No snake data available</p>';
   
-  if (snakeDetails && snakeDetailsLg && snakeGrid && snakeGridLg) {
-    snakeDetails.innerHTML = detailsContent;
-    snakeDetailsLg.innerHTML = detailsContent;
-    snakeGrid.innerHTML = `<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">${gridContent}</div>`;
-    snakeGridLg.innerHTML = `<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">${gridContent}</div>`;
+  if (elements.snakeDetails && elements.snakeDetailsLg && elements.snakeGrid && elements.snakeGridLg) {
+    elements.snakeDetails.innerHTML = detailsContent;
+    elements.snakeDetailsLg.innerHTML = detailsContent;
+    elements.snakeGrid.innerHTML = `<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">${gridContent}</div>`;
+    elements.snakeGridLg.innerHTML = `<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">${gridContent}</div>`;
   }
 }
 
@@ -315,14 +309,14 @@ renderContent(snakeData);
 
 }, 300);
 
-nonVenomousButton.addEventListener('click', () => {
+elements.nonVenomousButton.addEventListener('click', () => {
 isVenomous = false;
 updateToggleButtons();
 debouncedRenderData('non-venomous');
 
 });
 
-venomousButton.addEventListener('click', () => {
+elements.venomousButton.addEventListener('click', () => {
 isVenomous = true;
 updateToggleButtons();
 debouncedRenderData('venomous');
