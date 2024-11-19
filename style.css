@@ -2,7 +2,7 @@
 Theme Name: type-of-snake
 Theme URI: https://github.com/shibjeedanuwar/type-of-snake.git
 Description: Serpentia is a sleek WordPress theme designed specifically for snake enthusiasts. Its responsive layout ensures a seamless experience on all devices, while customizable features allow you to showcase your content beautifully. With a focus on SEO optimization and social media integration, Serpentia helps your blog reach a wider audience. Perfect for sharing care tips, species profiles, and personal stories, this theme combines aesthetics and functionality to elevate your snake blog.
-Version: 1.2.4
+Version: 1.2.5
 Author: shibjee danuwar
 Author URI: Your https://shibjeedanuwar.com
 GitHub Theme URI: https://github.com/shibjeedanuwar/type-of-snake.git
@@ -52,7 +52,7 @@ html {
 }
 
 body {
-
+background:red;
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
   /* background-color: var(--white-color); */
