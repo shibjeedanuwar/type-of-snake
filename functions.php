@@ -160,13 +160,13 @@ function get_snake_images() {
                     )
                 );
 
-                /$snake_name = $snake_data ? $snake_data->snake_name : get_the_title();
+                $snake_name = $snake_data ? $snake_data->snake_name : get_the_title();
     
                 $posts[] = [
                     'imageUrl' => get_the_post_thumbnail_url($post_id, 'full') ?: 'default-image.jpg',
                     'imageAlt' => $alt_text,
                     'permalink' => get_permalink(),
-                    'post_id' => $post_id
+                    'post_id' => $post_id,
                     'name' => $snake_name // Using snake_name from the custom table
                 ];
             }
