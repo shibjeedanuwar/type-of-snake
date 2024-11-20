@@ -160,7 +160,7 @@ function get_snake_images() {
                     )
                 );
 
-                $snake_name = $snake_data ? $snake_data->snake_name : get_the_title();
+                $snake_name = $snake_data ? $snake_data->snake_name : $title;
     
                 $posts[] = [
                     'imageUrl' => get_the_post_thumbnail_url($post_id, 'full') ?: 'default-image.jpg',
