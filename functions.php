@@ -151,23 +151,23 @@ function get_snake_images() {
                 $alt_text = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
                 
                 // Get snake_name from venomous_creatures table
-                // $snake_data = $wpdb->get_row(
-                //     $wpdb->prepare(
-                //         "SELECT snake_name 
-                //          FROM {$wpdb->prefix}venomous_creatures 
-                //          WHERE post_id = %d",
-                //         $post_id
-                //     )
-                // );
+                $snake_data = $wpdb->get_row(
+                    $wpdb->prepare(
+                        "SELECT snake_name 
+                         FROM {$wpdb->prefix}venomous_creatures 
+                         WHERE post_id = %d",
+                        $post_id
+                    )
+                );
 
-                ///$snake_name = $snake_data ? $snake_data->snake_name : get_the_title();
+                /$snake_name = $snake_data ? $snake_data->snake_name : get_the_title();
     
                 $posts[] = [
                     'imageUrl' => get_the_post_thumbnail_url($post_id, 'full') ?: 'default-image.jpg',
                     'imageAlt' => $alt_text,
                     'permalink' => get_permalink(),
                     'post_id' => $post_id
-                    //'name' => $snake_name // Using snake_name from the custom table
+                    'name' => $snake_name // Using snake_name from the custom table
                 ];
             }
 
