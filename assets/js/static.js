@@ -29,6 +29,19 @@ document.addEventListener('DOMContentLoaded', () => {
       elements.chatInterface.classList.add('translate-x-full');
     });
   }
+  //  chat form event listener
+  function addMessage(message, isUser) {
+    if (!elements.chatMessages) return;
+    
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `p-3 rounded-lg mb-2 ${isUser ? 'bg-emerald-500 ml-auto' : 'bg-slate-700'} max-w-[80%]`;
+    messageDiv.textContent = message;
+    elements.chatMessages.appendChild(messageDiv);
+    
+    // Auto-scroll to the latest message
+    elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
+  }
+
 
   if (elements.chatForm && elements.chatInput && elements.chatMessages) {
     elements.chatForm.addEventListener('submit', (e) => {
