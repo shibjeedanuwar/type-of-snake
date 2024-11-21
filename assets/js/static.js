@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     chatButton: document.getElementById('chatButton') || null,
     chatInterface: document.getElementById('chatInterface') || null,
     closeChat: document.getElementById('closeChat') || null,
-    nonVenomousButton: document.getElementById('nonVenomousButton'),
-    venomousButton: document.getElementById('venomousButton'),
+    nonVenomousButton: document.getElementById('nonVenomousButton') || null,
+    venomousButton: document.getElementById('venomousButton') || null,
     snakeDetails: document.getElementById('snakeDetails'),
     snakeGrid: document.getElementById('snakeGrid'),
     snakeDetailsLg: document.getElementById('snakeDetailsLg'),
@@ -153,6 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let isVenomous = false;
 
   function updateToggleButtons() {
+    if (!elements.venomousButton || !elements.nonVenomousButton) return;
+
     if (isVenomous) {
       elements.venomousButton.classList.add('bg-emerald-500', 'text-white');
       elements.nonVenomousButton.classList.remove('bg-emerald-500', 'text-white');
@@ -309,20 +311,25 @@ renderContent(snakeData);
 
 }, 300);
 
-elements.nonVenomousButton.addEventListener('click', () => {
-isVenomous = false;
-updateToggleButtons();
-debouncedRenderData('non-venomous');
+if (elements.nonVenomousButton) {
+  elements.nonVenomousButton.addEventListener('click', () => {
+    isVenomous = false;
+    updateToggleButtons();
+    debouncedRenderData('non-venomous');
+  });
+}
 
-});
+if (elements.venomousButton) {
+  elements.venomousButton.addEventListener('click', () => {
+    isVenomous = true;
+    updateToggleButtons();
+    debouncedRenderData('venomous');
+  });
+}
 
-elements.venomousButton.addEventListener('click', () => {
-isVenomous = true;
-updateToggleButtons();
-debouncedRenderData('venomous');
-});
-
-// Initial render
-updateToggleButtons();
-debouncedRenderData('non-venomous');
+// Only call initial render if elements exist
+if (elements.nonVenomousButton && elements.venomousButton) {
+  updateToggleButtons();
+  debouncedRenderData('non-venomous');
+}
 });
