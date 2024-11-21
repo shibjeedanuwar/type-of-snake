@@ -526,7 +526,7 @@ $snake_data = !empty($results) ? $results[0] : null;
                 </div>
       <!-- end hide div -->
        <article>
-        <div id="blog-article" class=" col col-md-8 mx-md-auto p-2 shadow move-out-left  remove">
+        <div id="blog-article" class=" col col-md-8 mx-md-auto shadow move-out-left  remove">
           <php if (have_posts()) :
             while (have_posts()) : the_post(); ?>
         
@@ -549,7 +549,7 @@ $snake_data = !empty($results) ? $results[0] : null;
                         </div>
                     </header>
         
-                    <div class="entry-content  mx-1 mx-md-2">
+                    <div class="entry-content  p-3">
                         <?php the_content(); ?>
                     </div>
         
