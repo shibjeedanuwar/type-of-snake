@@ -2,7 +2,7 @@
 Theme Name: type-of-snake
 Theme URI: https://github.com/shibjeedanuwar/type-of-snake.git
 Description: Serpentia is a sleek WordPress theme designed specifically for snake enthusiasts. Its responsive layout ensures a seamless experience on all devices, while customizable features allow you to showcase your content beautifully. With a focus on SEO optimization and social media integration, Serpentia helps your blog reach a wider audience. Perfect for sharing care tips, species profiles, and personal stories, this theme combines aesthetics and functionality to elevate your snake blog.
-Version: 1.2.7
+Version: 1.2.8
 Author: shibjee danuwar
 Author URI: Your https://shibjeedanuwar.com
 GitHub Theme URI: https://github.com/shibjeedanuwar/type-of-snake.git
@@ -379,22 +379,13 @@ a {
   line-height: 1;
 }
 
-  #toc{
+  /* #toc{
     display:none ;
   }
-  
+   */
   
 }
-@media screen and (max-width: 1150px) {
 
-  
-
-  
-  /* table of content not show  */
-  #toc{
-    display:none !important;
-  }
-}
 /* header navbar menu */
 /* Change color grid or list view */
 .red{
@@ -405,9 +396,7 @@ a {
   position: absolute;
   width: 50%;
 } */
-#toc{
-  display:none ;
-}
+
 
 
  /* CSS to remove pointer cursor from form elements */
@@ -647,194 +636,15 @@ article .categories::after {
   display: block; /* Show images when loaded */
 }
 
-/* //bootstrap carousel css */
 
 
-/* single page css offset */
-#dynamic-css{
-  transition: transform 0.5s ease; /* Smooth transitions */
-}
-
-.single-nav{
-  width: 100%;
-  height: 100%;
-  background: red;
-  z-index: var(--z-fixed);
-  color: var(--white-color);
-  font-weight: var(--font-medium);
-}
-
-#dynamic-css{
-  transition: transform 0.5s ease; /* Smooth transitions */
-}
+ 
 
 
 
-/* single page css */
-
-/* plugin article */
-.plugin-article{
-  transition: transform .4s;
-  /* margin-left: -100%; */
-
-}
-/* plugin article */
-
-/* tree structures table of content */
-
-.fixed-toc {
-  position: fixed;
-  top: 53%;
-  left: 2px; /* Adjust for spacing from the left */
-  transform: translateY(-50%); /* Center vertically */
-  max-width: 33%;
-  max-height: calc(100vh - 125px); /* Full height minus margins */
-  padding: 10px;
-  font-size: 12px !important;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 5px; /* Rounded corners for better aesthetics */
-  overflow-y:scroll;
-}
-
-.tree {
-  margin: 1em;
-  padding-left: 1em;
-  position: relative;
-}
-
-.tree input {
-  position: absolute;
-  clip: rect(0, 0, 0, 0);
-}
-
-.tree input ~ ul {
-  display: none;
-}
-
-.tree input:checked ~ ul {
-  display: block;
-}
-
-.tree li {
-  line-height: 1.2;
-  position: relative;
-  padding: 0 0 1em 1em;
-}
-
-.tree ul li {
-  padding: 1em 0 0 1em;
-}
-
-.tree_label {
-  position: relative;
-  display: inline-block;
-  background: #fff;
-  padding: 0.2em 0.5em;
-}
-
-label.tree_label {
-  cursor: pointer;
-}
-
-label.tree_label:hover {
-  color: #666;
-}
-
-.active {
-  color: red;
-  font-weight: bold;
-}
-
-.tree li:before {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -0.5em;
-  display: block;
-  width: 0;
-  border-left: 1px solid #777;
-  content: "";
-}
-
-.tree li:after {
-  position: absolute;
-  left: -0.5em;
-  top: 1.2em; /* Adjust to connect correctly */
-  width: 1em;
-  height: 1px;
-  background: #777;
-  content: '';
-}
-
-.tree li:last-child:before {
-  height: 1em;
-  bottom: auto;
-}
-
-.tree > li:last-child:before {
-  display: none;
-}
-  /* Table of content ON/OFF checkbox */
-  .checkbox {
-    opacity: 0;
-    position: absolute;
-}
-
-.checkbox-label {
-    background-color: #111;
-    width: 52px;  /* Increased from 50px to 52px */
-    height: 28px; /* Increased from 26px to 28px */
-    border-radius: 50px;
-    position: relative;
-    padding: 5px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.checkbox-label .ball {
-    background-color: #fff;
-    width: 24px; /* Increased from 22px to 24px */
-    height: 24px; /* Increased from 22px to 24px */
-    position: absolute;
-    left: 2px;
-    top: 2px;
-    border-radius: 50%;
-    transition: transform 0.2s linear;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px;
-    font-weight: bold;
-    color: #111; /* Default text color */
-}
-
-.checkbox:checked + .checkbox-label .ball {
-    transform: translateX(24px);
-    color: #fff; /* Change text color when checked */
-}
-
-.checkbox:checked + .checkbox-label .ball.on {
-     color: #4caf50; /*Green color for ON state */
-}
-
-.checkbox-label .ball.off {
-    color: #f44336; /* Red color for OFF state */
-}
 
 
-/* Table of content ON/OFF checkbox */
 
-/* tree structures table of content */
-
-/* wp-content css */
-.wp-content{
-  position:relative;
-  width: 100%;
-}
-/* wp-content css */
 
 /* pagingation css code  */
 #pagination a {

@@ -29,7 +29,7 @@ function snake_enqueue_styles() {
     wp_localize_script('static', 'ajax_object', array(
         'ajax_url' => admin_url('admin-ajax.php'), // URL for AJAX requests
     ));
-    wp_enqueue_script('custom-slider-init', get_template_directory_uri() . '/assets/js/slider-init.js', ['jquery', 'bootstrap-js'], null, true);
+    // wp_enqueue_script('custom-slider-init', get_template_directory_uri() . '/assets/js/slider-init.js', ['jquery', 'bootstrap-js'], null, true);
 
     // Initialize the carousel if needed
     // echo '<script>document.addEventListener("DOMContentLoaded", function() { var myCarousel = document.querySelector("#carouselExample"); var carousel = new bootstrap.Carousel(myCarousel); });</script>';

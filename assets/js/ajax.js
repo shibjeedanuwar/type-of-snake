@@ -64,7 +64,6 @@ function loadPosts(offset = 0) {
         success: function(data) {
             const response = JSON.parse(data);
             const posts = response.posts;
-            console.log("hell"+posts);
             totalPosts = response.total; // Get total number of posts
             updatePagination(); // Update pagination after loading posts
 

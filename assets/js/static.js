@@ -305,7 +305,6 @@ try {
 
 const debouncedRenderData = debounce(async (title) => {
 const snakeData = await fetchSnakeData(title);
-  console.log(snakeData);
 
 renderContent(snakeData);
 
