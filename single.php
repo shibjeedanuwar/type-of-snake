@@ -413,7 +413,7 @@ $snake_data = !empty($results) ? $results[0] : null;
 
         <div id="snakeGridLg" class="overflow-y-auto" style="width: 50%; color:red;">
           <!-- Snake grid content here -->
-          <div class="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white mw-100 mt-1 p-2 mw-100 p-3 mb-3 shadow" id='plugin-article-venoum' style="display:none;">
+          <div class="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white mw-100 mt-1 p-2 mw-100 p-3 mb-3 shadow" id='plugin-article-venoum' >
             <!-- venomous text here -->
             <div class="p-4 sm:p-6 space-y-6 sm:space-y-8">
         
