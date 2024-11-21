@@ -158,7 +158,7 @@ $snake_data = !empty($results) ? $results[0] : null;
     <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-emerald-400">
 	 
 	 <?php
-                if ($snake_data ) {
+                if ($snake_data && !empty($snake_data->snake_name)) {
                     echo $snake_data->snake_name;
                 } else {
                     $isVenomous = false;
@@ -179,12 +179,12 @@ $snake_data = !empty($results) ? $results[0] : null;
 				<!-- 	snake discription			 -->
            
 				<p class="text-slate-300 leading-relaxed tracking-wide text-sm sm:text-base"> <?php
-                if ($snake_data ) {
+                if ($snake_data && !empty($snake_data->description)) {
                     echo $snake_data->description;
                 } else {
-                    $description = $isVenomous
-    ? 'These species possess highly potent venom designed to immobilize prey and aid in digestion. While they rarely seek human contact, their bites require immediate medical attention.'
-    : 'These gentle species lack venom glands and typically subdue prey through constriction. They are generally docile and make excellent subjects for observation and study.';
+                    echo $isVenomous 
+                        ? 'These species possess highly potent venom designed to immobilize prey and aid in digestion. While they rarely seek human contact, their bites require immediate medical attention.'
+                        : 'These gentle species lack venom glands and typically subdue prey through constriction. They are generally docile and make excellent subjects for observation and study.';
                 }
                 ?>
 				</p>
@@ -204,7 +204,7 @@ $snake_data = !empty($results) ? $results[0] : null;
                   <h4 class="font-medium mb-1">Danger Level</h4>
                   <p class="text-slate-300 text-sm">
 					     <?php
-                if ($snake_data ) {
+                if ($snake_data && !empty($snake_data->danger_level)) {
                     echo $snake_data->danger_level;
                 } else {
                   
@@ -225,7 +225,7 @@ $snake_data = !empty($results) ? $results[0] : null;
                   <h4 class="font-medium mb-1">Temperament</h4>
                    <p class="text-slate-300 text-sm">
                 <?php
-                if ($snake_data ) {
+                if ($snake_data && !empty($snake_data->temperament)) {
                     echo $snake_data->temperament;
                 } else {
                     echo $isVenomous 
@@ -246,7 +246,7 @@ $snake_data = !empty($results) ? $results[0] : null;
                   <h4 class="font-medium mb-1">Size Range</h4>
                   <p class="text-slate-300 text-sm">
                 <?php
-                if ($snake_data ) {
+                if ($snake_data && !empty($snake_data->size_range)) {
                     echo $snake_data->size_range;
                 } else {
                     echo $isVenomous 
@@ -267,7 +267,7 @@ $snake_data = !empty($results) ? $results[0] : null;
                   <h4 class="font-medium mb-1">Habitat</h4>
                  <p class="text-slate-300 text-sm">
                 <?php
-                if ($snake_data ) {
+                if ($snake_data && !empty($snake_data->habitat)) {
                     echo $snake_data->habitat;
                 } else {
                     echo $isVenomous 
@@ -286,7 +286,7 @@ $snake_data = !empty($results) ? $results[0] : null;
                   <h4 class="font-medium mb-1">Lifespan</h4>
                  <p class="text-slate-300 text-sm">
                 <?php
-                if ($snake_data ) {
+                if ($snake_data && !empty($snake_data->lifespan)) {
                     echo $snake_data->lifespan;
                 } else {
                     echo $isVenomous 
@@ -358,7 +358,7 @@ $snake_data = !empty($results) ? $results[0] : null;
           <div class="space-y-4 mt-3">
             <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-emerald-400">
 				<?php
-                if ($snake_data) {
+                if ($snake_data && !empty($snake_data->snake_name)) {
                     echo $snake_data->snake_name;
                 } else {
                     $isVenomous = false;
@@ -374,11 +374,11 @@ $snake_data = !empty($results) ? $results[0] : null;
                 }
 		?>
 			  </h2>
-         <!-- 	snake discription			 -->
+         <!-- 	 snake discription			 -->
            
 				<p class="text-slate-300 leading-relaxed tracking-wide text-sm sm:text-base"> 
 					<?php
-                if ($snake_data) {
+                if ($snake_data && !empty($snake_data->description)) {
                     echo $snake_data->description;
                 } else {
                    echo $description = $isVenomous
@@ -428,7 +428,7 @@ $snake_data = !empty($results) ? $results[0] : null;
                   <h4 class="font-medium mb-1">Danger Level</h4>
                   <p class="text-slate-300 text-sm">
 					     <?php
-                if ($snake_data) {
+                if ($snake_data && !empty($snake_data->danger_level)) {
                     echo $snake_data->danger_level;
                 } else {
                     
@@ -448,7 +448,7 @@ $snake_data = !empty($results) ? $results[0] : null;
                   <h4 class="font-medium mb-1">Temperament</h4>
                   <p class="text-slate-300 text-sm">
                 <?php
-                if ($snake_data) {
+                if ($snake_data && !empty($snake_data->temperament)) {
                     echo $snake_data->temperament;
                 } else {
                     echo $isVenomous 
@@ -468,7 +468,7 @@ $snake_data = !empty($results) ? $results[0] : null;
                   <h4 class="font-medium mb-1">Size Range</h4>
                  <p class="text-slate-300 text-sm">
                 <?php
-                if ($snake_data) {
+                if ($snake_data && !empty($snake_data->lifespan)) {
                     echo $snake_data->size_range;
                 } else {
                     echo $isVenomous 
@@ -487,7 +487,7 @@ $snake_data = !empty($results) ? $results[0] : null;
                   <h4 class="font-medium mb-1">Habitat</h4>
                 <p class="text-slate-300 text-sm">
                 <?php
-                if ($snake_data) {
+                if ($snake_data && !empty($snake_data->habitat)) {
                     echo $snake_data->habitat;
                 } else {
                     echo $isVenomous 
@@ -505,7 +505,7 @@ $snake_data = !empty($results) ? $results[0] : null;
                   <h4 class="font-medium mb-1">Lifespan</h4>
                    <p class="text-slate-300 text-sm">
                 <?php
-                if ($snake_data) {
+                if ($snake_data && !empty($snake_data->lifespan)) {
                     echo $snake_data->lifespan;
                 } else {
                     echo $isVenomous 
