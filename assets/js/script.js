@@ -85,7 +85,7 @@ function setCookie(name, value, days) {
     document.cookie = name + '=' + encodeURIComponent(value) + 
                       '; expires=' + expires + 
                       '; path=/' + 
-                      '; domain=theme.typeofsnake.com;' + // Set the domain if necessary
+                      '; domain=typeofsnake.com;' + // Set the domain if necessary
                       'Secure; SameSite=Lax'; // Add Secure and SameSite attributes
 }
 function getCookie(name) {
